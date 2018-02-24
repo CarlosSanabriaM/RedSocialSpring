@@ -9,28 +9,26 @@ public class User {
 	@Id
 	@GeneratedValue
 	private long id;
+
 	@Column(unique = true)
 	private String email;
 	private String name;
 	private String lastName;
-	@SuppressWarnings("unused")
+	private String password;
+	@Transient
+	private String passwordConfirm;
 	private String role;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Post> posts;
+
+	@Transient
+	private Set<User> friends;//TODO - Corregir
 	
 	@Transient
-	private Set<User> invitaciones;
+	private Set<User> invitations;
 	
-	@Transient
-	private Set<User> friends;
-
-	private String password;
-	@Transient // propiedad que no se almacena e la tabla.
-	private String passwordConfirm;
-
 	public User(String email, String name, String lastName) {
-		super();
 		this.email = email;
 		this.name = name;
 		this.lastName = lastName;
@@ -91,4 +89,13 @@ public class User {
 	public void setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
 	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
 }
