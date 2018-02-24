@@ -18,10 +18,16 @@ public class Post {
 	@ManyToOne
 	private User user;
 	private Date date;
-	private Image photo;
+	private Image photo;//TODO - Revisar que clase hay que usar
 	
-	public Post() {
-		
+	public Post() {}
+	
+	public Post(String title, String text, User user, Date date, Image photo) {
+		this.title = title;
+		this.text = text;
+		this.user = user;
+		this.date = date;
+		this.photo = photo;
 	}
 
 	public String getTitle() {
@@ -63,6 +69,5 @@ public class Post {
 	public void setPhoto(Image photo) {
 		this.photo = photo;
 	}
-	
-	
+		
 }
