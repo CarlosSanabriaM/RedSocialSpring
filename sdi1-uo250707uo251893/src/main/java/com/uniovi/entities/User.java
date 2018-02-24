@@ -1,5 +1,7 @@
 package com.uniovi.entities;
 
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,7 +15,15 @@ public class User {
 	private String lastName;
 	@SuppressWarnings("unused")
 	private String role;
+	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<Post> posts;
+	
+	@Transient
+	private Set<User> invitaciones;
+	
+	@Transient
+	private Set<User> friends;
 
 	private String password;
 	@Transient // propiedad que no se almacena e la tabla.
