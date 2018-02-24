@@ -18,7 +18,7 @@ public class Post {
 	@ManyToOne
 	private User user;
 	private Date date;
-	private Image photo;//TODO - Revisar que clase hay que usar
+	//private Image photo; //XXX - No funciona con JPA
 	
 	public Post() {}
 	
@@ -27,7 +27,7 @@ public class Post {
 		this.text = text;
 		this.user = user;
 		this.date = date;
-		this.photo = photo;
+		//this.photo = photo;
 	}
 
 	public String getTitle() {
@@ -62,12 +62,12 @@ public class Post {
 		this.date = date;
 	}
 
-	public Image getPhoto() {
-		return photo;
-	}
-
-	public void setPhoto(Image photo) {
-		this.photo = photo;
-	}
+//	public Image getPhoto() {
+//		return photo;
+//	}
+//
+//	public void setPhoto(Image photo) {
+//		this.photo = photo;
+//	}
 		
 }
