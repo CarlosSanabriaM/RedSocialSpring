@@ -15,6 +15,7 @@ public class User {
 	private String name;
 	private String lastName;
 	private String password;
+	
 	@Transient
 	private String passwordConfirm;
 	private String role;
@@ -96,6 +97,30 @@ public class User {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public Set<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(Set<Post> posts) {
+		this.posts = posts;
+	}
+
+	public Set<User> getFriends() {
+		return friends;
+	}
+
+	public void setFriends(Set<User> friends) {
+		this.friends = friends;
+	}
+
+	public Set<User> getInvitations() {
+		return invitations;
+	}
+
+	public void setInvitations(Set<User> invitations) {
+		this.invitations = invitations;
 	}
 	
 }

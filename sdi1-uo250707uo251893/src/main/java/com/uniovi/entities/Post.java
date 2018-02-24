@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -15,7 +16,9 @@ public class Post {
 	private long id;
 	private String title;
 	private String text;
+	
 	@ManyToOne
+	@JoinColumn(name="user_id")
 	private User user;
 	private Date date;
 	//private Image photo; //XXX - No funciona con JPA
@@ -30,6 +33,14 @@ public class Post {
 		//this.photo = photo;
 	}
 
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
 	public String getTitle() {
 		return title;
 	}
@@ -69,5 +80,7 @@ public class Post {
 //	public void setPhoto(Image photo) {
 //		this.photo = photo;
 //	}
+	
+	
 		
 }
