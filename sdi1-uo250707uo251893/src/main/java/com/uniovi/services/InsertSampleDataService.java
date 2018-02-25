@@ -23,10 +23,10 @@ public class InsertSampleDataService {
 	@SuppressWarnings({ "rawtypes", "serial", "unchecked" })
 	@PostConstruct
 	public void init() {//TODO - Completar
-//		User user1 = new User("99999990A", "Pedro", "Díaz");
-//		user1.setPassword("123456");
-//		user1.setRole(rolesService.getRoles()[0]);
-//		
+		User user1 = new User("user1@gmail.com", "Pedro", "Díaz");
+		user1.setPassword("123456");
+		user1.setRole(rolesService.getRoles()[0]);
+		
 //		User user2 = new User("99999991B", "Lucas", "Núñez");
 //		user2.setPassword("123456");
 //		user2.setRole(rolesService.getRoles()[0]);
@@ -86,7 +86,7 @@ public class InsertSampleDataService {
 //		};
 //		user4.setMarks(user4Marks);
 //		
-//		usersService.addUser(user1);
+		usersService.addUser(user1);
 //		usersService.addUser(user2);
 //		usersService.addUser(user3);
 //		usersService.addUser(user4);
