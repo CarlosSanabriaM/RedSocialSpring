@@ -28,11 +28,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.csrf().disable()
 		.authorizeRequests()
 			.antMatchers("/css/**", "/img/**", "/script/**", "/", "/signup").permitAll()
+			//TODO - Aqui en medio van las mas especificas, de arriba hacia abajo
+			.antMatchers("/user/**").hasAnyAuthority("ROLE_PUBLIC")
 			.anyRequest().authenticated()
 				.and()
 		.formLogin()
 			.loginPage("/login").permitAll()
-			.defaultSuccessUrl("/home")
+			.defaultSuccessUrl("/user/list")
 				.and()
 		.logout().permitAll();
 	}
