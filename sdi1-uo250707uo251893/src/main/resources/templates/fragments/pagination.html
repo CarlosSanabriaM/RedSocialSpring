@@ -3,7 +3,8 @@
 		
 		<!-- Primera -->
 		<li class="page-item">
-			<a class="page-link" th:href="@{'?page=0'}">Primera</a>
+			<a class="page-link" th:href="@{'?page=0'}"
+				th:text="#{Pagination.first}">Primera</a>
 		</li>
 
 		<!-- Anterior (si la hay ) -->
@@ -27,7 +28,8 @@
 		<!-- Última -->
 		<li class="page-item">
 			<a class="page-link"
-				th:href="@{'?page='+${page.getTotalPages()-1}}"> Última</a>
+				th:href="@{'?page='+${page.getTotalPages()-1}}"
+				th:text="#{Pagination.last}"> Última</a>
 		</li>
 			
 	</ul>

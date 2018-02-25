@@ -1,6 +1,8 @@
 package com.uniovi.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -8,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.uniovi.entities.User;
@@ -37,7 +40,6 @@ public class UsersController {
 		return "signup";
 	}
 
-	@ResponseBody // TODO . quitar!!!!!!!!!!
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signup(@ModelAttribute @Validated User user, BindingResult result, Model model) {
 		signUpFormValidator.validate(user, result);
@@ -49,6 +51,22 @@ public class UsersController {
 		usersService.addUser(user);
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm()); // Nada mas registrarse le hacemos que esté logeado
 		return "redirect:user/list";
+	}
+	
+	@RequestMapping("/user/list")
+	public String getListado(Model model, Pageable pageable, 
+			@RequestParam(value="", required=false) String searchText) {
+		
+		Page<User> users;
+		if (searchText != null && !searchText.isEmpty()) {
+			users = usersService.searchUsersByEmailAndName(pageable, searchText);
+		} else {
+			users = usersService.getUsers(pageable);
+		}
+		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("page", users);
+		
+		return "user/list";
 	}
 
 }
