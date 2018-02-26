@@ -1,6 +1,5 @@
 package com.uniovi.entities;
 
-import java.awt.Image;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -16,21 +15,20 @@ public class Post {
 	private long id;
 	private String title;
 	private String text;
+	private Date date;
+	//private Image photo; //XXX - No funciona con JPA
 	
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
-	private Date date;
-	//private Image photo; //XXX - No funciona con JPA
 	
 	public Post() {}
 	
-	public Post(String title, String text, User user, Date date, Image photo) {
+	public Post(String title, String text, User user) {
 		this.title = title;
 		this.text = text;
 		this.user = user;
-		this.date = date;
-		//this.photo = photo;
+		this.date = new Date(); // fecha actual
 	}
 
 	public long getId() {
