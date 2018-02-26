@@ -29,7 +29,7 @@
 						required="true" />
 				</div>
 			</div>
-
+			
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 					<button type="submit" class="btn btn-primary"
@@ -40,6 +40,9 @@
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		
 		</form>
+
+		<p id="loginError" class="text-danger" 
+			th:if="${param.error != null}" th:text="#{Error.login}"></p>
 
 	</div>
 	

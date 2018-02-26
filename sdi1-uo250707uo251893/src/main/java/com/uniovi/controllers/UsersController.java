@@ -52,8 +52,8 @@ public class UsersController {
 		return "redirect:user/list";
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(Model model) {
+	@RequestMapping("/login")
+	public String login(Model model, @RequestParam(required=false) String error) {
 		return "login";
 	}
 	
