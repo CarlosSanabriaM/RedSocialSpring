@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Post {
@@ -15,7 +17,10 @@ public class Post {
 	private long id;
 	private String title;
 	private String text;
+	
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
+	
 	//private Image photo; //XXX - No funciona con JPA
 	
 	@ManyToOne
@@ -24,11 +29,11 @@ public class Post {
 	
 	public Post() {}
 	
-	public Post(String title, String text, User user) {
+	public Post(String title, String text, User user, Date date) {
 		this.title = title;
 		this.text = text;
 		this.user = user;
-		this.date = new Date(); // fecha actual
+		this.date = date;
 	}
 
 	public long getId() {

@@ -24,10 +24,11 @@
 
     <div class="form-group">
       <label class="control-label col-sm-2" for="text" 
-      	th:text="#{Placeholder.post.add.text}">Texto:</label>
+      	th:text="#{Label.post.add.text}">Texto:</label>
       <div class="col-sm-10">          
-        <textarea class="form-control" name="text" 
-        		th:placeholder="#{Placeholder.post.add.text}" required="true" />
+        <textarea class="form-control" name="text" rows="8"
+        		th:placeholder="#{Placeholder.post.add.text}" required="true">
+        	</textarea>
         <span class="text-danger" th:if="${#fields.hasErrors('text')}" th:errors="*{text}">
       </div>
     </div>
