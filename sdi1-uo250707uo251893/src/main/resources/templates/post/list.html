@@ -22,13 +22,13 @@
 				<tbody>
 					<tr th:each="post : ${postsList}">
 						<td th:text="${post.title}">Título de la publicación</td>
-						<td th:text="${post.date}">Fecha de la publicación</td>
+						<td th:text="${#dates.format(post.date, 'dd/MM/yyyy HH:mm')}">
+							Fecha de la publicación
+						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		
-		<footer th:replace="fragments/pagination" />
 		
 	</div>
 	

@@ -29,11 +29,11 @@ public class Post {
 	
 	public Post() {}
 	
-	public Post(String title, String text, User user, Date date) {
+	public Post(String title, String text, Date date, User user) {
 		this.title = title;
 		this.text = text;
-		this.user = user;
 		this.date = date;
+		this.user = user;
 	}
 
 	public long getId() {

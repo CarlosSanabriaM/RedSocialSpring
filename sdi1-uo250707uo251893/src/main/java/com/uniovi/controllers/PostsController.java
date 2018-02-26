@@ -37,7 +37,7 @@ public class PostsController {
 	}
 	
 	@RequestMapping(value = "/post/add", method = RequestMethod.POST)
-	public String add(@ModelAttribute @Validated Post post, BindingResult result,
+	public String addPost(@ModelAttribute @Validated Post post, BindingResult result,
 			Principal principal) {
 		
 		postAddFormValidator.validate(post, result);
@@ -52,7 +52,18 @@ public class PostsController {
 		post.setDate(new Date()); // fecha actual
 		postsService.addPost(post);
 		
-		return "redirect:/post/list/user/" + userInSession.getId();
+		return "redirect:/post/list";
+	}
+	
+	@RequestMapping("/post/list")
+	public String getList(Principal principal, Model model) {
+		String emailUserInSession = principal.getName();
+		User userInSession = usersService.getUserByEmail(emailUserInSession); 
+		
+		model.addAttribute("postsList", 
+				postsService.getPostsForUser(userInSession));
+		
+		return "post/list";
 	}
 	
 }
