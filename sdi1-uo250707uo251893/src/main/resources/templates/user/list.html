@@ -24,27 +24,44 @@
 		</p>
 		
 		<div class="table-responsive">
-			<table class="table table-hover">
+			<table class="table table-hover" id="tableUsers" th:fragment="tableUsers">
 				<thead>
 					<tr>
 						<th th:text="#{user.name}">Nombre</th>
 						<th th:text="#{user.email}">Email</th>
-						<!--
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-						<th class="col-md-1"></th>
-						 -->
+						<th sec:authorize="hasRole('ROLE_ADMIN')" class="col-md-1"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="user : ${usersList}">
 						<td th:text="${user.name + ' ' + user.lastName}">Nombre completo del usuario</td>
 						<td th:text="${user.email}">Email del usuario</td>
-						<!-- 
-						<td><a th:href="${'/user/details/' + user.id}" th:text="#{list.details}">detalles</a></td>
-						<td><a th:href="${'/user/edit/' + user.id}" th:text="#{list.modify}">modificar</a></td>
-						<td><a th:href="${'/user/delete/' + user.id}" th:text="#{list.delete}">eliminar</a></td>
-						 -->
+						 
+						<td sec:authorize="hasRole('ROLE_ADMIN')">
+							<div>
+								<button type="button" th:id="${'deleteUserButton' + user.id}"
+									class="btn btn-default">Eliminar</button>
+								<script th:inline="javascript">
+									/*<![CDATA[*/
+									$("#deleteUserButton[[${user.id}]]").click( function() {
+										$.get("/user/delete/[[${user.id}]]", function(data) {
+											var numberPage = [[${param.page}]];
+											var sizePage = [[${param.size}]];
+										  	var urlUpdate = '/user/list/update';
+										  	if ( numberPage != null ){
+										  		urlUpdate += "?page=" + numberPage[0];
+										  	}
+										  	if ( sizePage != null ){
+										  		urlUpdate += "&size=" + sizePage[0];
+										  	}
+										  	$("#tableUsers").load(urlUpdate);
+										});
+									});
+									/*]]>*/
+								</script>
+							</div>
+						</td>
+
 					</tr>
 				</tbody>
 			</table>

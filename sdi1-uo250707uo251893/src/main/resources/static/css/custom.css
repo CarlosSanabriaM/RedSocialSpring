@@ -11,12 +11,19 @@ body {
   margin-bottom: 60px;
 }
 
-footer {
+body > footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 60px;
   background-color: #101010;
+  text-align:center;
+  line-height:60px
+}
+
+#loginFooter {
+  position: absolute;
+  bottom: 50px;
   text-align:center;
   line-height:60px
 }

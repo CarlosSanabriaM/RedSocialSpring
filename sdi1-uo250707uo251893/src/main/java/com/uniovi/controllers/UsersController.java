@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -72,6 +73,12 @@ public class UsersController {
 		return "login";
 	}
 	
+	@RequestMapping("/admin/login")
+	public String adminLogin() {
+		httpSession.setAttribute("login", "/admin/login");
+		return "admin/login";
+	}
+	
 	@RequestMapping("/user/list")
 	public String getListado(Model model, Pageable pageable, Principal principal,
 			@RequestParam(value="", required=false) String searchText) {
@@ -82,13 +89,13 @@ public class UsersController {
 		if(urlLogin.equals("/admin/login") && !role.equals("ROLE_ADMIN")) {
 			SecurityContextHolder.clearContext(); // Para hacer logout al usuario TODO - QUIZAS HAYA QUE HACER ALGO MAS!!  ¿SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);?
 			return "redirect://localhost:8090/admin/login?error=role"; //TODO -  ESTO NO ES DEL todo CORRECTO, pero es que si no me retorna a una relativa --> /user/admin/login
-		}
+		} 
 		
 		//TODO - Si no se puede iniciar sesion con ROLE_ADMIN en /login, hay que hacer esto
-//		if(urlLogin.equals("/login") && !role.equals("ROLE_PUBLIC")) {
-//			SecurityContextHolder.clearContext();
-//			return "redirect://localhost:8090/login?error";
-//		}
+		if(urlLogin.equals("/login") && !role.equals("ROLE_PUBLIC")) {
+			SecurityContextHolder.clearContext();
+			return "redirect://localhost:8090/login?error";
+		}
 		
 		Page<User> users;
 		if (searchText != null && !searchText.isEmpty()) {
@@ -102,10 +109,18 @@ public class UsersController {
 		return "user/list";
 	}
 	
-	@RequestMapping("/admin/login")
-	public String adminLogin() {
-		httpSession.setAttribute("login", "/admin/login");
-		return "admin/login";
+	@RequestMapping("/user/list/update")
+	public String updateListado(Model model, Pageable pageable, Principal principal) {		
+		Page<User> users = usersService.getUsers(pageable);
+		model.addAttribute("usersList", users.getContent());
+		
+		return "user/list :: tableUsers";
 	}
-
+	
+	@RequestMapping("/user/delete/{id}")
+	public String deleteUser(@PathVariable Long id) {	
+		usersService.deleteUser(id);
+		return "redirect:/user/list";
+	}
+	
 }

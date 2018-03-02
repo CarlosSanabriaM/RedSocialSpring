@@ -44,6 +44,12 @@
 		<p id="loginError" class="text-danger" 
 			th:if="${param.error != null}" th:text="#{Error.login}"></p>
 
+
+		<footer id="loginFooter">
+			<div class="container">
+				<a href="/admin/login">Identifícate como administrador</a>
+			</div>
+		</footer>
 	</div>
 	
 	<footer th:replace="fragments/footer" />
