@@ -113,8 +113,9 @@ public class UsersController {
 	public String updateListado(Model model, Pageable pageable, Principal principal) {		
 		Page<User> users = usersService.getUsers(pageable);
 		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("page", users);
 		
-		return "user/list :: tableUsers";
+		return "user/list :: tableUsersAndPagination";
 	}
 	
 	@RequestMapping("/user/delete/{id}")
