@@ -1,8 +1,13 @@
 package com.uniovi.controllers;
 
+import java.security.Principal;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,6 +38,9 @@ public class UsersController {
 	@Autowired
 	private RolesService rolesService;
 	
+	@Autowired
+	private HttpSession httpSession;
+	
 	@RequestMapping("/signup")
 	public String signup(Model model) {
 		model.addAttribute("user", new User());
@@ -46,20 +54,41 @@ public class UsersController {
 			return "signup";
 		}
 		
-		user.setRole(rolesService.getRoles()[0]); // Los usuarios registrados desde signup tienen role public
+		user.setRole(rolesService.getRoles()[0]); // Los usuarios registrados desde signup tienen role public TODO - cambiar!, debe ser una entidad
 		usersService.addUser(user);
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm()); // Nada mas registrarse le hacemos que esté logeado
 		return "redirect:user/list";
 	}
 	
 	@RequestMapping("/login")
-	public String login(Model model, @RequestParam(required=false) String error) {
+	public String login(@RequestParam(required=false) String error) {
+		
+		String urlLogin = (String) httpSession.getAttribute("login");
+		if(urlLogin != null && urlLogin.equals("/admin/login") && error != null) {
+			return "redirect:admin/login?error=credentials";
+		}
+		
+		httpSession.setAttribute("login", "/login");
 		return "login";
 	}
 	
 	@RequestMapping("/user/list")
-	public String getListado(Model model, Pageable pageable, 
+	public String getListado(Model model, Pageable pageable, Principal principal,
 			@RequestParam(value="", required=false) String searchText) {
+		
+		String urlLogin = (String) httpSession.getAttribute("login");
+		String role = usersService.getUserByEmail(principal.getName()).getRole();
+		
+		if(urlLogin.equals("/admin/login") && !role.equals("ROLE_ADMIN")) {
+			SecurityContextHolder.clearContext(); // Para hacer logout al usuario TODO - QUIZAS HAYA QUE HACER ALGO MAS!!  ¿SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);?
+			return "redirect://localhost:8090/admin/login?error=role"; //TODO -  ESTO NO ES DEL todo CORRECTO, pero es que si no me retorna a una relativa --> /user/admin/login
+		}
+		
+		//TODO - Si no se puede iniciar sesion con ROLE_ADMIN en /login, hay que hacer esto
+//		if(urlLogin.equals("/login") && !role.equals("ROLE_PUBLIC")) {
+//			SecurityContextHolder.clearContext();
+//			return "redirect://localhost:8090/login?error";
+//		}
 		
 		Page<User> users;
 		if (searchText != null && !searchText.isEmpty()) {
@@ -71,6 +100,12 @@ public class UsersController {
 		model.addAttribute("page", users);
 		
 		return "user/list";
+	}
+	
+	@RequestMapping("/admin/login")
+	public String adminLogin() {
+		httpSession.setAttribute("login", "/admin/login");
+		return "admin/login";
 	}
 
 }

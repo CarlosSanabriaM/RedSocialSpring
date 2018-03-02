@@ -22,7 +22,10 @@ public class InsertSampleDataService {
 	private RolesService rolesService;
 
 	@PostConstruct
-	public void init() {//TODO - Completar
+	public void init() {
+		
+		// Usuarios normales
+		
 		User user1 = new User("user1@gmail.com", "Pedro", "Díaz");
 		user1.setPassword("1234");
 		user1.setRole(rolesService.getRoles()[0]);
@@ -144,6 +147,14 @@ public class InsertSampleDataService {
 		usersService.addUser(user14);
 		usersService.addUser(user15);
 		usersService.addUser(user16);
+		
+		// Administradores
+		
+		User admin = new User("admin@gmail.com", "NombreAdmin", "ApellidoAdmin");
+		admin.setPassword("1234");
+		admin.setRole(rolesService.getRoles()[1]);
+		
+		usersService.addUser(admin);
 
 	}
 	
