@@ -93,10 +93,10 @@ public class InsertSampleDataService {
 		
 		Set user1Posts = new HashSet<Post>() {
 			{
-				add(new Post("Titulo A1", "Texto A1", new Date(1505167200000L), user1));
+				add(new Post("Titulo A1", "Texto A1", new Date(1505777200000L), user1));
 				add(new Post("Titulo A2", "Texto A2", new Date(1505133200000L), user1));
-				add(new Post("Titulo A3", "Texto A3", new Date(1505122200000L), user1));
-				add(new Post("Titulo A4", "Texto A4", new Date(1505111200000L), user1));				
+				add(new Post("Titulo A3", "Texto A3", new Date(1505999200000L), user1));
+				add(new Post("Titulo A4", "Texto A4", new Date(1505888200000L), user1));				
 			}
 		};
 		user1.setPosts(user1Posts);
@@ -104,9 +104,9 @@ public class InsertSampleDataService {
 		Set user2Posts = new HashSet<Post>() {
 			{
 				add(new Post("Titulo B1", "Texto B1", new Date(1505167200000L), user2));
-				add(new Post("Titulo B1", "Texto B1", new Date(1505167207420L), user2));
-				add(new Post("Titulo B1", "Texto B1", new Date(1505167200130L), user2));
-				add(new Post("Titulo B1", "Texto B1", new Date(1505167200656L), user2));
+				add(new Post("Titulo B2", "Texto B2", new Date(1333167207420L), user2));
+				add(new Post("Titulo B3", "Texto B3", new Date(1698167200130L), user2));
+				add(new Post("Titulo B4", "Texto B4", new Date(1235067200656L), user2));
 			}
 		};
 		user2.setPosts(user2Posts);
@@ -114,9 +114,9 @@ public class InsertSampleDataService {
 		Set user3Posts = new HashSet<Post>() {
 			{
 				add(new Post("Titulo C1", "Texto C1", new Date(1504167200000L), user3));
-				add(new Post("Titulo C1", "Texto C1", new Date(1525167207420L), user3));
-				add(new Post("Titulo C1", "Texto C1", new Date(1105167200130L), user3));
-				add(new Post("Titulo C1", "Texto C1", new Date(1507167200656L), user3));
+				add(new Post("Titulo C2", "Texto C2", new Date(1325167207420L), user3));
+				add(new Post("Titulo C3", "Texto C3", new Date(1105167200130L), user3));
+				add(new Post("Titulo C4", "Texto C4", new Date(1507167200656L), user3));
 			}
 		};
 		user3.setPosts(user3Posts);
@@ -124,9 +124,9 @@ public class InsertSampleDataService {
 		Set user4Posts = new HashSet<Post>() {
 			{
 				add(new Post("Titulo D1", "Texto D1", new Date(1504199200000L), user4));
-				add(new Post("Titulo D1", "Texto D1", new Date(1525177207420L), user4));
-				add(new Post("Titulo D1", "Texto D1", new Date(1105144200130L), user4));
-				add(new Post("Titulo D1", "Texto D1", new Date(1507133200656L), user4));
+				add(new Post("Titulo D2", "Texto D2", new Date(1525177207420L), user4));
+				add(new Post("Titulo D3", "Texto D3", new Date(1105144200130L), user4));
+				add(new Post("Titulo D4", "Texto D4", new Date(1507133200656L), user4));
 			}
 		};
 		user4.setPosts(user4Posts);

@@ -42,7 +42,7 @@
 							<td sec:authorize="hasRole('ROLE_ADMIN')">
 								<div>
 									<button type="button" th:id="${'deleteUserButton' + user.id}"
-										class="btn btn-default">Eliminar</button>
+										class="btn btn-default" th:text="#{Delete}">Eliminar</button>
 									<script th:inline="javascript">
 										/*<![CDATA[*/
 										$("#deleteUserButton[[${user.id}]]").click( function() {

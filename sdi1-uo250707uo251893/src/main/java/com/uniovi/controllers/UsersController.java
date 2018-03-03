@@ -58,7 +58,7 @@ public class UsersController {
 		user.setRole(rolesService.getRoles()[0]); // Los usuarios registrados desde signup tienen role public TODO - cambiar!, debe ser una entidad
 		usersService.addUser(user);
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm()); // Nada mas registrarse le hacemos que esté logeado
-		return "redirect:user/list";
+		return "redirect:/user/list";
 	}
 	
 	@RequestMapping("/login")
@@ -66,7 +66,7 @@ public class UsersController {
 		
 		String urlLogin = (String) httpSession.getAttribute("login");
 		if(urlLogin != null && urlLogin.equals("/admin/login") && error != null) {
-			return "redirect:admin/login?error=credentials";
+			return "redirect:/admin/login?error=credentials";
 		}
 		
 		httpSession.setAttribute("login", "/login");
@@ -87,11 +87,13 @@ public class UsersController {
 		String role = usersService.getUserByEmail(principal.getName()).getRole();
 		
 		if(urlLogin.equals("/admin/login") && !role.equals("ROLE_ADMIN")) {
+			SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
 			SecurityContextHolder.clearContext();
 			return "redirect://localhost:8090/admin/login?error=role"; //TODO -  ESTO NO ES DEL todo CORRECTO, pero es que si no me retorna a una relativa --> /user/admin/login
 		} 
 		
 		if(urlLogin.equals("/login") && !role.equals("ROLE_PUBLIC")) {
+			SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
 			SecurityContextHolder.clearContext();
 			return "redirect://localhost:8090/login?error";
 		}

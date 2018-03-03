@@ -43,7 +43,6 @@ public class UsersService {
 	 * @return
 	 */
 	public Page<User> getUsers(Pageable pageable) {
-		System.out.println(getUsers());
 		return usersRepository.findAllByRole(pageable, "ROLE_PUBLIC");
 	}
 
