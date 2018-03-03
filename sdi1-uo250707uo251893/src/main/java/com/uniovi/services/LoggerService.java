@@ -41,9 +41,22 @@ public class LoggerService {
 		users.getContent().forEach( (x) -> emails.add(x.getEmail()) );
 		
 		log.info("El usuario con email {} ha realizado un listado del resto de usuarios en base "
-				+ "a una búsqueda por email o nombre con el siguiente texto: '{}'."
-				+ "El resultado de dicha búsqueda ha retornado los usuarios con los siguientes emails: {}", 
-				email, searchText, emails);
+				+ "a una búsqueda por email o nombre con el siguiente texto: '{}'. "
+				+ "El resultado de dicha búsqueda en la página {} "
+				+ "(con número máximo de usuarios por página de {}) "
+				+ "ha retornado los usuarios con los siguientes emails: {}", 
+				email, searchText, users.getNumber(), users.getSize(), emails);
+	}
+
+	public void userList(String email, Page<User> users) {
+		List<String> emails = new LinkedList<String>(); 
+		users.getContent().forEach( (x) -> emails.add(x.getEmail()) );
+		
+		log.info("El usuario con email {} ha realizado un listado del resto de usuarios. "
+				+ "El resultado de dicho listado en la página {} "
+				+ "(con número máximo de usuarios por página de {}) "
+				+ "ha retornado los usuarios con los siguientes emails: {}", 
+				email, users.getNumber(), users.getSize(), emails);
 	}
 	
 }

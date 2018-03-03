@@ -119,6 +119,7 @@ public class UsersController {
 			loggerService.userListSearchByEmailAndName(email, searchText, users);
 		} else {
 			users = usersService.getUsers(pageable);
+			loggerService.userList(email, users);
 		}
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
