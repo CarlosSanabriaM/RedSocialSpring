@@ -19,7 +19,8 @@ public class SecurityService {
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);
+	private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);//TODO-Dejar aqui o quitar y hacer un metodo en LoggerService
+																					  //Lo que pasa que perdemos el nombre de la clase en el Log.
 
 	public String findLoggedInDni() {
 		Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();

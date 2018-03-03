@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.User;
+import com.uniovi.services.LoggerService;
 import com.uniovi.services.RolesService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
@@ -42,6 +43,9 @@ public class UsersController {
 	@Autowired
 	private HttpSession httpSession;
 	
+	@Autowired
+	private LoggerService loggerService;
+	
 	@RequestMapping("/signup")
 	public String signup(Model model) {
 		model.addAttribute("user", new User());
@@ -50,6 +54,7 @@ public class UsersController {
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signup(@ModelAttribute @Validated User user, BindingResult result, Model model) {
+		
 		signUpFormValidator.validate(user, result);
 		if(result.hasErrors()) {
 			return "signup";
@@ -57,7 +62,10 @@ public class UsersController {
 		
 		user.setRole(rolesService.getRoles()[0]); // Los usuarios registrados desde signup tienen role public TODO - cambiar!, debe ser una entidad
 		usersService.addUser(user);
-		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm()); // Nada mas registrarse le hacemos que esté logeado
+		
+		loggerService.newUserHasSignedUp(user.getEmail());//TODO - Dejar aqui o meter dentor del addUser del Service?? es que addUser puede ser llamado desde otro sitio en una aplicacion real, no solo desde el signup
+		
+		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm()); // Nada mas registrarse le hacemos que esté logeado	
 		return "redirect:/user/list";
 	}
 	
@@ -79,6 +87,7 @@ public class UsersController {
 		return "admin/login";
 	}
 	
+	//TODO . metodo demasiado grande, quizas haya que sacar algo a un Service, o no??
 	@RequestMapping("/user/list")
 	public String getListado(Model model, Pageable pageable, Principal principal,
 			@RequestParam(value="", required=false) String searchText) {
