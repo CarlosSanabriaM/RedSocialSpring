@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -99,9 +98,7 @@ public class UsersController {
 		String email = userInSession.getEmail();
 		
 		if(urlLogin.equals("/admin/login") && !role.equals("ROLE_ADMIN")) {
-			// Deslogeamos al usuario en sesión
-			SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
-			SecurityContextHolder.clearContext();
+			securityService.logoutUserInSession();
 			
 			loggerService.errorByRoleInAdminLogin(email);
 			
@@ -109,9 +106,7 @@ public class UsersController {
 		} 
 		
 		if(urlLogin.equals("/login") && !role.equals("ROLE_PUBLIC")) {
-			// Deslogeamos al usuario en sesión
-			SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
-			SecurityContextHolder.clearContext();
+			securityService.logoutUserInSession();
 			
 			loggerService.errorByRoleInLogin(email);
 			
@@ -121,6 +116,7 @@ public class UsersController {
 		Page<User> users;
 		if (searchText != null && !searchText.isEmpty()) {
 			users = usersService.searchUsersByEmailAndName(pageable, searchText);
+			loggerService.userListSearchByEmailAndName(email, searchText, users);
 		} else {
 			users = usersService.getUsers(pageable);
 		}
