@@ -87,11 +87,10 @@ public class UsersController {
 		String role = usersService.getUserByEmail(principal.getName()).getRole();
 		
 		if(urlLogin.equals("/admin/login") && !role.equals("ROLE_ADMIN")) {
-			SecurityContextHolder.clearContext(); // Para hacer logout al usuario TODO - QUIZAS HAYA QUE HACER ALGO MAS!!  ¿SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);?
+			SecurityContextHolder.clearContext();
 			return "redirect://localhost:8090/admin/login?error=role"; //TODO -  ESTO NO ES DEL todo CORRECTO, pero es que si no me retorna a una relativa --> /user/admin/login
 		} 
 		
-		//TODO - Si no se puede iniciar sesion con ROLE_ADMIN en /login, hay que hacer esto
 		if(urlLogin.equals("/login") && !role.equals("ROLE_PUBLIC")) {
 			SecurityContextHolder.clearContext();
 			return "redirect://localhost:8090/login?error";
