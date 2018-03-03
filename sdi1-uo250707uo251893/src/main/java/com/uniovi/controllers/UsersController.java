@@ -74,6 +74,7 @@ public class UsersController {
 		
 		String urlLogin = (String) httpSession.getAttribute("login");
 		if(urlLogin != null && urlLogin.equals("/admin/login") && error != null) {
+			loggerService.errorByCredentialsInAdminLogin();
 			return "redirect:/admin/login?error=credentials";
 		}
 		
@@ -93,17 +94,27 @@ public class UsersController {
 			@RequestParam(value="", required=false) String searchText) {
 		
 		String urlLogin = (String) httpSession.getAttribute("login");
-		String role = usersService.getUserByEmail(principal.getName()).getRole();
+		User userInSession = usersService.getUserByEmail(principal.getName());
+		String role = userInSession.getRole();
+		String email = userInSession.getEmail();
 		
 		if(urlLogin.equals("/admin/login") && !role.equals("ROLE_ADMIN")) {
+			// Deslogeamos al usuario en sesión
 			SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
 			SecurityContextHolder.clearContext();
-			return "redirect:/admin/login?error=role"; //TODO -  ESTO NO ES DEL todo CORRECTO, pero es que si no me retorna a una relativa --> /user/admin/login
+			
+			loggerService.errorByRoleInAdminLogin(email);
+			
+			return "redirect:/admin/login?error=role";
 		} 
 		
 		if(urlLogin.equals("/login") && !role.equals("ROLE_PUBLIC")) {
+			// Deslogeamos al usuario en sesión
 			SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
 			SecurityContextHolder.clearContext();
+			
+			loggerService.errorByRoleInLogin(email);
+			
 			return "redirect:/login?error";
 		}
 		

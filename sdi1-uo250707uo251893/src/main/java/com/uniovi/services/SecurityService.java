@@ -42,4 +42,10 @@ public class SecurityService {
 			logger.debug(String.format("Auto login %s successfully!", email));
 		}
 	}
+	
+	public void logoutUserInSession() {
+		SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+		SecurityContextHolder.clearContext();
+	}
+	
 }
