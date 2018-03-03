@@ -3,32 +3,52 @@
 		
 		<!-- Primera -->
 		<li class="page-item">
-			<a class="page-link" th:href="@{'?page=0'}"
+			<a class="page-link" 
+				th:href="@{ ${param.containsKey('searchText')} ? 
+								'?searchText='+ ${param.searchText[0]} +'&page=0' : 
+								'?page=0' }"
+								
 				th:text="#{Pagination.first}">Primera</a>
 		</li>
 
 		<!-- Anterior (si la hay ) -->
 		<li class="page-item" th:if='${page.getNumber()-1 >= 0}'>
-			<a class="page-link" th:href="@{'?page='+${page.getNumber()-1} }"
+			<a class="page-link" 
+				th:href="@{ ${param.containsKey('searchText')} ? 
+					'?searchText='+ ${param.searchText[0]} +'&page='+ ${page.getNumber()-1} :
+					'?page='+ ${page.getNumber()-1} }"
+				
 				th:text="${page.getNumber()}"></a>
 		</li>
 
 		<!-- Actual -->
 		<li class="page-item active">
-			<a class="page-link" th:href="@{'?page='+${page.getNumber()} }"
+			<a class="page-link" 
+				th:href="@{ ${param.containsKey('searchText')} ? 
+					'?searchText='+ ${param.searchText[0]} +'&page='+ ${page.getNumber()} :
+					'?page='+ ${page.getNumber()} }"
+				
 				th:text="${page.getNumber()+1}"></a>
 		</li>
 
 		<!-- Siguiente (si la hay) -->
 		<li class="page-item" th:if='${page.getNumber()+1 <= page.getTotalPages()-1}'>
-			<a class="page-link" th:href="@{'?page='+${page.getNumber()+1} }"
+			<a class="page-link" 
+				th:href="@{ ${param.containsKey('searchText')} ? 
+					'?searchText='+ ${param.searchText[0]} +'&page='+ ${page.getNumber()+1} :
+					'?page='+ ${page.getNumber()+1} }"
+				
 				th:text="${page.getNumber()+2}"></a>
 		</li>
 
 		<!-- Última -->
 		<li class="page-item">
+			<!-- th:with="pageToShow=${}"-->
 			<a class="page-link"
-				th:href="@{'?page='+${page.getTotalPages()-1}}"
+				th:href="@{ ${param.containsKey('searchText')} ? 
+					'?searchText='+ ${param.searchText[0]} +'&page='+ ${page.getTotalPages()-1} :
+					'?page='+ ${page.getTotalPages()-1} }"
+				
 				th:text="#{Pagination.last}"> Última</a>
 		</li>
 			
