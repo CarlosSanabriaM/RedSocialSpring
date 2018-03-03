@@ -89,13 +89,13 @@ public class UsersController {
 		if(urlLogin.equals("/admin/login") && !role.equals("ROLE_ADMIN")) {
 			SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
 			SecurityContextHolder.clearContext();
-			return "redirect://localhost:8090/admin/login?error=role"; //TODO -  ESTO NO ES DEL todo CORRECTO, pero es que si no me retorna a una relativa --> /user/admin/login
+			return "redirect:/admin/login?error=role"; //TODO -  ESTO NO ES DEL todo CORRECTO, pero es que si no me retorna a una relativa --> /user/admin/login
 		} 
 		
 		if(urlLogin.equals("/login") && !role.equals("ROLE_PUBLIC")) {
 			SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
 			SecurityContextHolder.clearContext();
-			return "redirect://localhost:8090/login?error";
+			return "redirect:/login?error";
 		}
 		
 		Page<User> users;
