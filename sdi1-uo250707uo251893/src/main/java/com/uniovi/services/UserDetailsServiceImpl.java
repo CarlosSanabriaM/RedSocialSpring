@@ -21,6 +21,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
 		User user = usersRepository.findByEmail(dni);
 		
+		if(user==null) {
+			System.out.println("USUARIO NO EXISTE"); // TODO - aqui meter log en lugar de este syso
+			throw new UsernameNotFoundException("User not found");
+		}
+		
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		
 		grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));

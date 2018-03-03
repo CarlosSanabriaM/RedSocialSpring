@@ -122,5 +122,11 @@ public class User {
 	public void setInvitations(Set<User> invitations) {
 		this.invitations = invitations;
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", name=" + name + ", lastName=" + lastName + ", role=" + role
+				+ "]";
+	}
 	
 }

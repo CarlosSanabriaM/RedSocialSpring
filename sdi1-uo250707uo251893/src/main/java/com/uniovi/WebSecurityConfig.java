@@ -30,7 +30,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/css/**", "/img/**", "/script/**", "/", "/signup", "/admin/login").permitAll()
 			//TODO - Aqui en medio van las mas especificas, de arriba hacia abajo
 			.antMatchers("/user/delete/*").hasAuthority("ROLE_ADMIN")
-			.antMatchers("/user/list/update").hasAuthority("ROLE_ADMIN")// ??
 			.antMatchers("/user/**").hasAnyAuthority("ROLE_PUBLIC", "ROLE_ADMIN")
 			.antMatchers("/post/**").hasAnyAuthority("ROLE_PUBLIC")
 			.anyRequest().authenticated()

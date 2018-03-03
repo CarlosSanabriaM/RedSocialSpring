@@ -26,14 +26,25 @@ public class UsersService {
 	@PostConstruct
 	public void init() {}
 
+	/**
+	 * Devuelve los usuarios que tienen ROLE_PUBLIC
+	 * @param pageable
+	 * @return
+	 */
 	public List<User> getUsers() {
 		List<User> users = new ArrayList<User>();
-		usersRepository.findAll().forEach(users::add);
+		usersRepository.findAllByRole("ROLE_PUBLIC").forEach(users::add);
 		return users;
 	}
 	
+	/**
+	 * Devuelve los usuarios que tienen ROLE_PUBLIC
+	 * @param pageable
+	 * @return
+	 */
 	public Page<User> getUsers(Pageable pageable) {
-		return usersRepository.findAll(pageable);
+		System.out.println(getUsers());
+		return usersRepository.findAllByRole(pageable, "ROLE_PUBLIC");
 	}
 
 	public User getUser(Long id) {
@@ -55,7 +66,7 @@ public class UsersService {
 	
 	public Page<User> searchUsersByEmailAndName(Pageable pageable, String searchText) {
 		searchText = "%" + searchText + "%"; // Comodines para el SQL
-		return usersRepository.searchByEmailAndName(pageable, searchText);
+		return usersRepository.searchByEmailAndNameByRole(pageable, searchText, "ROLE_PUBLIC");
 	}
 	
 }
