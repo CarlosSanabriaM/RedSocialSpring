@@ -12,44 +12,55 @@
 		</li>
 
 		<!-- Anterior (si la hay ) -->
-		<li class="page-item" th:if='${page.getNumber()-1 >= 0}'>
-			<a class="page-link" 
-				th:href="@{ ${param.containsKey('searchText')} ? 
-					'?searchText='+ ${param.searchText[0]} +'&page='+ ${page.getNumber()-1} :
-					'?page='+ ${page.getNumber()-1} }"
+		<li class="page-item" th:if='${page.getNumber()-1 >= 0}'
+			th:with="pageNumber=${page.getNumber()-1}">
 				
-				th:text="${page.getNumber()}"></a>
+				<a class="page-link" 
+					th:href="@{ ${param.containsKey('searchText')} ? 
+						'?searchText='+ ${param.searchText[0]} +'&page='+ ${pageNumber} :
+						'?page='+ ${pageNumber} }"
+					
+					th:text="${page.getNumber()}"></a>
+					
 		</li>
 
 		<!-- Actual -->
-		<li class="page-item active">
-			<a class="page-link" 
-				th:href="@{ ${param.containsKey('searchText')} ? 
-					'?searchText='+ ${param.searchText[0]} +'&page='+ ${page.getNumber()} :
-					'?page='+ ${page.getNumber()} }"
-				
-				th:text="${page.getNumber()+1}"></a>
+		<li class="page-item active"
+			th:with="pageNumber=${page.getNumber()}">
+			
+				<a class="page-link" 
+					th:href="@{ ${param.containsKey('searchText')} ? 
+						'?searchText='+ ${param.searchText[0]} +'&page='+ ${pageNumber} :
+						'?page='+ ${pageNumber} }"
+					
+					th:text="${page.getNumber()+1}"></a>
+					
 		</li>
 
 		<!-- Siguiente (si la hay) -->
-		<li class="page-item" th:if='${page.getNumber()+1 <= page.getTotalPages()-1}'>
-			<a class="page-link" 
-				th:href="@{ ${param.containsKey('searchText')} ? 
-					'?searchText='+ ${param.searchText[0]} +'&page='+ ${page.getNumber()+1} :
-					'?page='+ ${page.getNumber()+1} }"
+		<li class="page-item" th:if='${page.getNumber()+1 <= page.getTotalPages()-1}'
+			th:with="pageNumber=${page.getNumber()+1}">
 				
-				th:text="${page.getNumber()+2}"></a>
+				<a class="page-link" 
+					th:href="@{ ${param.containsKey('searchText')} ? 
+						'?searchText='+ ${param.searchText[0]} +'&page='+ ${pageNumber} :
+						'?page='+ ${pageNumber} }"
+					
+					th:text="${page.getNumber()+2}"></a>
+					
 		</li>
 
 		<!-- Última -->
-		<li class="page-item">
-			<!-- th:with="pageToShow=${}"-->
-			<a class="page-link"
-				th:href="@{ ${param.containsKey('searchText')} ? 
-					'?searchText='+ ${param.searchText[0]} +'&page='+ ${page.getTotalPages()-1} :
-					'?page='+ ${page.getTotalPages()-1} }"
-				
-				th:text="#{Pagination.last}"> Última</a>
+		<li class="page-item"
+			th:with="pageNumber=${page.getTotalPages()-1}">
+			
+				<a class="page-link"
+					th:href="@{ ${param.containsKey('searchText')} ? 
+						'?searchText='+ ${param.searchText[0]} +'&page='+ ${pageNumber} :
+						'?page='+ ${pageNumber} }"
+					
+					th:text="#{Pagination.last}"> Última</a>
+					
 		</li>
 			
 	</ul>
