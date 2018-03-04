@@ -2,6 +2,7 @@ package com.uniovi.controllers;
 
 import java.security.Principal;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.uniovi.entities.Post;
 import com.uniovi.entities.User;
+import com.uniovi.services.LoggerService;
 import com.uniovi.services.PostsService;
 import com.uniovi.services.UsersService;
 import com.uniovi.validators.PostAddFormValidator;
@@ -29,6 +31,9 @@ public class PostsController {
 	
 	@Autowired
 	private PostAddFormValidator postAddFormValidator;
+	
+	@Autowired
+	private LoggerService loggerService;
 	
 	@RequestMapping("/post/add")
 	public String add(Model model) {
@@ -60,8 +65,9 @@ public class PostsController {
 		String emailUserInSession = principal.getName();
 		User userInSession = usersService.getUserByEmail(emailUserInSession); 
 		
-		model.addAttribute("postsList", 
-				postsService.getPostsForUser(userInSession));
+		List<Post> posts = postsService.getPostsForUser(userInSession);
+		model.addAttribute("postsList", posts);
+		loggerService.userListHisPosts(emailUserInSession, posts);
 		
 		return "post/list";
 	}

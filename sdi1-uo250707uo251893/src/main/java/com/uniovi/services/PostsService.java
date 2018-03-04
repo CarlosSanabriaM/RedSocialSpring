@@ -15,8 +15,12 @@ public class PostsService {
 	@Autowired
 	private PostsRepository postsRepository;
 	
+	@Autowired
+	private LoggerService loggerService;
+	
 	public void addPost(Post post) {
 		postsRepository.save(post);
+		loggerService.newPostCreated(post);
 	}
 
 	public List<Post> getPostsForUser(User userInSession) {

@@ -19,6 +19,9 @@ public class SecurityService {
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
+	@Autowired
+	private LoggerService loggerService;
+	
 	private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);//TODO-Dejar aqui o quitar y hacer un metodo en LoggerService
 																					  //Lo que pasa que perdemos el nombre de la clase en el Log.
 
@@ -39,7 +42,8 @@ public class SecurityService {
 	
 		if (aToken.isAuthenticated()) {
 			SecurityContextHolder.getContext().setAuthentication(aToken);
-			logger.debug(String.format("Auto login %s successfully!", email));
+			logger.debug(String.format("Auto login %s successfully!", email)); // TODO - quitar??
+			loggerService.userHasAutoLoggedIn(email);
 		}
 	}
 	

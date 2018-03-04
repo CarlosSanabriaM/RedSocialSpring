@@ -64,7 +64,8 @@ public class UsersController {
 		
 		loggerService.newUserHasSignedUp(user.getEmail());//TODO - Dejar aqui o meter dentor del addUser del Service?? es que addUser puede ser llamado desde otro sitio en una aplicacion real, no solo desde el signup
 		
-		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm()); // Nada mas registrarse le hacemos que esté logeado	
+		// Nada mas registrarse le hacemos que esté logeado
+		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());	
 		return "redirect:/user/list";
 	}
 	
@@ -97,7 +98,7 @@ public class UsersController {
 		String role = userInSession.getRole();
 		String email = userInSession.getEmail();
 		
-		if(urlLogin.equals("/admin/login") && !role.equals("ROLE_ADMIN")) {
+		if(urlLogin!= null && urlLogin.equals("/admin/login") && !role.equals("ROLE_ADMIN")) {
 			securityService.logoutUserInSession();
 			
 			loggerService.errorByRoleInAdminLogin(email);
@@ -105,12 +106,18 @@ public class UsersController {
 			return "redirect:/admin/login?error=role";
 		} 
 		
-		if(urlLogin.equals("/login") && !role.equals("ROLE_PUBLIC")) {
+		if(urlLogin!= null && urlLogin.equals("/login") && !role.equals("ROLE_PUBLIC")) {
 			securityService.logoutUserInSession();
 			
 			loggerService.errorByRoleInLogin(email);
 			
 			return "redirect:/login?error";
+		}
+		
+		// Si accede desde un login, es que acaba de iniciar sesión
+		if(urlLogin!= null) {
+			loggerService.userHasLoggedInFrom(email, urlLogin);
+			httpSession.removeAttribute("login");
 		}
 		
 		Page<User> users;
@@ -133,12 +140,18 @@ public class UsersController {
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
 		
+		loggerService.userListUpdated(principal.getName(), users);
+		
 		return "user/list :: tableUsersAndPagination";
 	}
 	
 	@RequestMapping("/user/delete/{id}")
-	public String deleteUser(@PathVariable Long id) {	
+	public String deleteUser(@PathVariable Long id, Principal principal) {	
+		String emailUserDeleted = usersService.getUser(id).getEmail();
 		usersService.deleteUser(id);
+		
+		loggerService.userDeleted(principal.getName(), id, emailUserDeleted);
+		
 		return "redirect:/user/list";
 	}
 	
