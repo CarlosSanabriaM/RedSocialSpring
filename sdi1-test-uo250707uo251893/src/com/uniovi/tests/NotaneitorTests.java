@@ -18,47 +18,50 @@ import com.uniovi.tests.pageobjects.PO_RegisterView;
 import com.uniovi.tests.pageobjects.PO_View;
 import com.uniovi.tests.util.SeleniumUtils;
 
-//Ordenamos las pruebas por el nombre del método
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class NotaneitorTests {
 	
-	//En Windows (Debe ser la versión 46.0 y desactivar las actualizacioens automáticas)):
-	//static String PathFirefox = "C:\\Path\\FirefoxPortable.exe";
-	//En MACOSX (Debe ser la versión 46.0 y desactivar las actualizaciones automáticas):
-	static String PathFirefox = "/Applications/Firefox_46.0.app/Contents/MacOS/firefox-bin";
+	//static String PathFirefox = "C:\\Path\\FirefoxPortable.exe"; // Windows
+	static String PathFirefox = "/Applications/Firefox_46.0.app/Contents/MacOS/firefox-bin"; // Mac
 	
 	//Común a Windows y a MACOSX
 	static WebDriver driver = getDriver(PathFirefox);
 	static String URL = "http://localhost:8090";
 
 	public static WebDriver getDriver(String PathFirefox) {
-		// Firefox (Versión 46.0) sin geckodriver para Selenium 2.x.
 		System.setProperty("webdriver.firefox.bin", PathFirefox);
 		WebDriver driver = new FirefoxDriver();
 		return driver;
 	}
 
-	// Antes de cada prueba se navega al URL home de la aplicaciónn
+	/**
+	 * Antes de cada prueba se navega al URL home de la aplicaciónn
+	 */
 	@Before
 	public void setUp() {
 		driver.navigate().to(URL);
 	}
 
-	// Después de cada prueba se borran las cookies del navegador
+	/**
+	 * Después de cada prueba se borran las cookies del navegador
+	 */
 	@After
 	public void tearDown() {
 		driver.manage().deleteAllCookies();
 	}
 
-	// Antes de la primera prueba
+	/**
+	 * Antes de la primera prueba entramos como administrador y 
+	 * reiniciamos la BD con los usuarios de prueba
+	 */
 	@BeforeClass
 	static public void begin() {
 		driver.navigate().to(URL);
-		///Vamos al login y entramos como administrador, y comprobamos que entramos correctamente
+		// Vamos al login, entramos como administrador y comprobamos que entramos correctamente
 		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, "99999988F", "123456");
 		
 		// Pinchamos en la opción del menú de Reiniciar BD y comprobamos que se muestra el mensaje correcto
-		PO_PrivateView.clickOption(driver, "/admin/restart", "text", "Base de datos reiniciada");
+		PO_PrivateView.clickLinkAndCheckTextAppears(driver, "/admin/restart", "text", "Base de datos reiniciada");
 
 		// Ahora nos desconectamos
 		PO_PrivateView.logoutAndCheckWasOk(driver);
@@ -81,14 +84,14 @@ public class NotaneitorTests {
 	// PR02. OPción de navegación. Pinchar en el enlace Registro en la página home
 	@Test
 	public void PR02() {
-		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+		PO_HomeView.clickLinkAndCheckTextAppears(driver, "signup", "class", "btn btn-primary");
 	}
 
 	// PR03. OPción de navegación. Pinchar en el enlace Identificate en la página
 	// home
 	@Test
 	public void PR03() {
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_HomeView.clickLinkAndCheckTextAppears(driver, "login", "class", "btn btn-primary");
 	}
 	
 	// PR04. OPción de navegación. Cambio de idioma de Español a Ingles y vuelta a
@@ -111,7 +114,7 @@ public class NotaneitorTests {
 	@Test
 	public void PR06() {
 		// Vamos al formulario de registro
-		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+		PO_HomeView.clickLinkAndCheckTextAppears(driver, "signup", "class", "btn btn-primary");
 		
 		// Rellenamos el formulario y comprobamos el error de DNI repetido. 
 		PO_RegisterView.fillFormAndCheckErrorKey(driver, "99999990A", "Josefo", "Perez", "77777", "77777", 
@@ -209,7 +212,7 @@ public class NotaneitorTests {
 		PO_View.checkElement(driver, "text", "Nota Nueva 1");
 		
 		// Ahora nos desconectamos
-		PO_PrivateView.clickOption(driver, "logout", "text", "Identifícate");
+		PO_PrivateView.clickLinkAndCheckTextAppears(driver, "logout", "text", "Identifícate");
 	}
 
 	// PRN. Loguearse como profesor, vamos a la ultima página y Eliminamos la Nota

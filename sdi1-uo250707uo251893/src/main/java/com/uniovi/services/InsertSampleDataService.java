@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.Post;
 import com.uniovi.entities.User;
+import com.uniovi.repositories.UsersRepository;
 
 @Service
 public class InsertSampleDataService {
@@ -20,6 +21,9 @@ public class InsertSampleDataService {
 	
 	@Autowired
 	private RolesService rolesService;
+	
+	@Autowired
+	private UsersRepository usersRepository;
 
 	@PostConstruct
 	public void init() {
@@ -156,6 +160,11 @@ public class InsertSampleDataService {
 		
 		usersService.addUser(admin);
 
+	}
+	
+	public void deleteAllAndInsertAgain() {
+		usersRepository.deleteAll();
+		init();
 	}
 	
 }

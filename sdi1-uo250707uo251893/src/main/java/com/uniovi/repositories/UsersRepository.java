@@ -22,4 +22,6 @@ public interface UsersRepository extends CrudRepository<User, Long> {
 			+ "(LOWER(u.name + ' ' + u.lastName) LIKE LOWER(?1) OR LOWER(u.email) LIKE LOWER(?1))")
 	Page<User> searchByEmailAndNameByRole(Pageable pageable, String seachtext, String role);
 
+	void deleteAll();
+	
 }

@@ -25,7 +25,7 @@ public class PO_LoginView extends PO_NavView {
 	
 	static public void goToLoginAndfillForm(WebDriver driver, String usernamep, String passwordp) {
 		// Vamos al formulario de logueo.
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_HomeView.clickLinkAndCheckTextAppears(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
 		PO_LoginView.fillForm(driver, usernamep, passwordp);
 	}

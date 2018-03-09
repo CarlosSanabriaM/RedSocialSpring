@@ -52,6 +52,12 @@
 	 				</ul>
  				</li>
  				
+ 				<li sec:authorize="hasRole('ROLE_ADMIN')" >
+		            <a id="aAdminRestart" href="/admin/restart" th:text="#{Nav.database.restart}">
+                         Reiniciar BD
+                     </a>
+		         </li>
+ 				
 			</ul>
 			
 			<ul class="nav navbar-nav navbar-right">

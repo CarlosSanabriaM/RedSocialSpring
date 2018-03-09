@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.User;
+import com.uniovi.services.InsertSampleDataService;
 import com.uniovi.services.LoggerService;
 import com.uniovi.services.RolesService;
 import com.uniovi.services.SecurityService;
@@ -38,6 +39,9 @@ public class UsersController {
 	
 	@Autowired
 	private RolesService rolesService;
+	
+	@Autowired
+	private InsertSampleDataService insertSampleDataService;
 	
 	@Autowired
 	private HttpSession httpSession;
@@ -153,6 +157,15 @@ public class UsersController {
 		loggerService.userDeleted(principal.getName(), id, emailUserDeleted);
 		
 		return "redirect:/user/list";
+	}
+	
+	@RequestMapping("/admin/restart")
+	public String restartDB(Principal principal) {
+		insertSampleDataService.deleteAllAndInsertAgain();
+		
+		loggerService.databaseRestarted(principal.getName());
+		
+		return "admin/restarted";
 	}
 	
 }

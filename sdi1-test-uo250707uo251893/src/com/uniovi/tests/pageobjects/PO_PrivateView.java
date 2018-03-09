@@ -16,7 +16,7 @@ public class PO_PrivateView extends PO_NavView {
 	 * @param driver
 	 */
 	public static void logoutAndCheckWasOk(WebDriver driver) {
-		clickOption(driver, "logout", "text", "Identifícate");
+		clickLinkAndCheckTextAppears(driver, "logout", "text", "Identifícate");
 	}
 	
 	public static void fillFormAddMark(WebDriver driver, 
@@ -92,19 +92,5 @@ public class PO_PrivateView extends PO_NavView {
 				"//td[contains(text(), '"+ markDescription +"')]/following-sibling::*/a[contains(@href, 'mark/delete')]");
 		elementos.get(0).click();
 	}
-	
-//	public static void clickLastNavigationMenuOption(WebDriver driver) {
-//		// Esperamos a que se muestren los enlaces de paginación
-//		WebElement elemento = PO_View.checkElement(driver, "free", "//li[last()]/a[contains(@class, 'page-link')]").get(0);
-//		// Nos vamos a la última página
-//		elemento.click();
-//	}
-//	
-//	public static void clickFirstNavigationMenuOption(WebDriver driver) {
-//		// Esperamos a que se muestren los enlaces de paginación
-//		WebElement elemento = PO_View.checkElement(driver, "free", "//li[first()]/a[contains(@class, 'page-link')]").get(0);
-//		// Nos vamos a la primera página
-//		elemento.click();
-//	}
-	
+
 }

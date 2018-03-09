@@ -101,4 +101,10 @@ public class LoggerService {
 				email, titles);
 	}
 	
+	public void databaseRestarted(String email) {
+		log.info("El usuario con email '{}' ha reiniciado la base de datos. " + 
+				"Se han eliminado todos los usuarios y se han vuelto a insertar los usuarios de prueba.", 
+				email);
+	}
+	
 }

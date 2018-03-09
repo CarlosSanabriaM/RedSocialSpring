@@ -91,7 +91,7 @@ public class PO_RegisterView extends PO_NavView {
 
 	public static void goToSignup(WebDriver driver) {
 		// Vamos al formulario de registro
-		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+		PO_HomeView.clickLinkAndCheckTextAppears(driver, "signup", "class", "btn btn-primary");
 	}
 
 }
