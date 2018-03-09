@@ -28,6 +28,10 @@ body > footer {
   line-height:60px
 }
 
+#userAuthenticatedAs{
+	text-align:center;
+}
+
 /* Sticky footer styles-------------------------------------------------- */
 
 /* Login styles---------------------------------------------------------- */

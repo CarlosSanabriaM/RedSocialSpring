@@ -8,6 +8,9 @@ public class PO_LoginView extends PO_NavView {
 
 	static public void fillForm(WebDriver driver, String usernamep, String passwordp) {
 		
+		// Si ya está cargado el formulario, no espera, y si no está cargado, espera a que se cargue
+		checkElement(driver, "id", "buttonSubmit");
+		
 		WebElement dni = driver.findElement(By.name("username"));
 		dni.click();
 		dni.clear();
@@ -19,27 +22,46 @@ public class PO_LoginView extends PO_NavView {
 		name.sendKeys(passwordp);
 		
 		// Pulsar el boton de Alta.
-		By boton = By.className("btn");
+		By boton = By.id("buttonSubmit");
 		driver.findElement(boton).click();
 	}
 	
+	/**
+	 * Va al formulario de login y lo rellena con los datos indicados
+	 * @param driver: apuntando al navegador abierto actualmente
+	 * @param usernamep: valor para el campo username
+	 * @param passwordp: valor para el campo password
+	 */
 	static public void goToLoginAndfillForm(WebDriver driver, String usernamep, String passwordp) {
-		// Vamos al formulario de logueo.
-		PO_HomeView.clickLinkAndCheckTextAppears(driver, "login", "class", "btn btn-primary");
-		// Rellenamos el formulario
+		PO_HomeView.clickLinkAndCheckSomethingAppears(driver, "login", "id", "buttonSubmit");
 		PO_LoginView.fillForm(driver, usernamep, passwordp);
 	}
 
+	/**
+	 * Va al formulario de login, lo rellena con los datos indicados y comprueba que entra correctamente
+	 * @param driver: apuntando al navegador abierto actualmente
+	 * @param usernamep: valor para el campo username
+	 * @param passwordp: valor para el campo password
+	 */
 	static public void goToLoginFillFormAndCheckWasOk(WebDriver driver, String usernamep, String passwordp) {
 		goToLoginAndfillForm(driver, usernamep, passwordp);
 		// Comprobamos que entramos en la pagina privada del usuario
-		PO_View.checkElement(driver, "text", usernamep);
+		PO_View.checkElement(driver, "text", "Usuario autenticado: " + usernamep);
 	}
 	
-	static public void goToLoginFillFormAndCheckWasWrong(WebDriver driver, String usernamep, String passwordp) {
+	/**
+	 * Va al formulario de login, lo rellena con los datos indicados y 
+	 * comprueba que se produce un error en el idioma indicado
+	 * @param driver: apuntando al navegador abierto actualmente
+	 * @param usernamep: valor para el campo username
+	 * @param passwordp: valor para el campo password
+	 */
+	static public void goToLoginFillFormAndCheckWasWrong(WebDriver driver, String usernamep, 
+			String passwordp,int language) {
+		
 		goToLoginAndfillForm(driver, usernamep, passwordp);
-		// COmprobamos que volvemos a la pagina de login
-		PO_View.checkElement(driver, "text", "Identifícate");
+		// Comprobamos que volvemos a la pagina de login y se muestra un error en el idioma indicado
+		PO_View.checkKey(driver, "Error.login", language);
 	}
 	
 }

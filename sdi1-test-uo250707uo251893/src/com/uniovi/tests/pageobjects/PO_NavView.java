@@ -19,7 +19,7 @@ public class PO_NavView extends PO_View {
 	 *           		de criterio es free es una expresion xpath completa.
 	 * @param textoDestino: texto correspondiente a la búsqueda de la página destino.
 	 */
-	public static void clickLinkAndCheckTextAppears(WebDriver driver, String idLink, String criterio, String textoDestino) {
+	public static void clickLinkAndCheckSomethingAppears(WebDriver driver, String idLink, String criterio, String textoDestino) {
 		// Obtenemos el elemento "a" que tiene el id indicado
 		List<WebElement> elementos = PO_NavView.checkElement(driver, "id", idLink);
 		// Tiene que haber un sólo elemento.

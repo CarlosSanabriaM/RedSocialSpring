@@ -16,10 +16,10 @@ public class PO_PrivateView extends PO_NavView {
 	 * @param driver
 	 */
 	public static void logoutAndCheckWasOk(WebDriver driver) {
-		clickLinkAndCheckTextAppears(driver, "logout", "text", "Identifícate");
+		clickLinkAndCheckSomethingAppears(driver, "logout", "text", "Identifícate");
 	}
 	
-	public static void fillFormAddMark(WebDriver driver, 
+	public static void fillFormAddPost(WebDriver driver, // TODO . modificar!!
 			int userOrder, String descriptionp, String scorep) {
 		
 		//Si ya está cargado no espera, y si no está cargado espera a que se cargue
@@ -44,12 +44,12 @@ public class PO_PrivateView extends PO_NavView {
 		driver.findElement(boton).click();
 	}
 	
-	public static void checkNumMarks(WebDriver driver, int numNotas) {
+	public static void checkNumMarks(WebDriver driver, int numNotas) {// TODO . modificar!!
 		List<WebElement> elementos = checkElement(driver, "free", "//tbody/tr");
 		assertTrue(elementos.size() == numNotas);
 	}
 
-	public static void checkMarkDetails(WebDriver driver, String markDescription) {
+	public static void checkMarkDetails(WebDriver driver, String markDescription) {// TODO . modificar!!
 		By enlace = By.xpath("//td[contains(text(), '"+ markDescription +"')]/following-sibling::*[2]");
 		driver.findElement(enlace).click();		
 		// Esperamos por la ventana de detalle
@@ -65,7 +65,7 @@ public class PO_PrivateView extends PO_NavView {
 	 * 			padre del enlace que hay que clickar)
 	 * @param textOption: Texto del href de la opcion del dropdown menu que se quiere clickar
 	 */
-	public static void clickDropdownMenuOption(WebDriver driver, String idDropdownMenu, String hrefMenuOption) {
+	public static void clickDropdownMenuOption(WebDriver driver, String idDropdownMenu, String hrefMenuOption) {// TODO ELIMINAR???
 		//Clickamos el dropdown menu indicado
 		List<WebElement> elementos = 
 				checkElement(driver, "free", "//li[contains(@id,'"+ idDropdownMenu +"')]/a");
@@ -80,14 +80,14 @@ public class PO_PrivateView extends PO_NavView {
 		elementos.get(0).click();
 	}
 	
-	public static void clickNavigationMenuOption(WebDriver driver, int page) {
+	public static void clickNavigationMenuOption(WebDriver driver, int page) {// TODO ELIMINAR???
 		// Esperamos a que se muestren los enlaces de paginación
 		List<WebElement> elementos = checkElement(driver, "free", "//a[contains(@class, 'page-link')]");
 		// Nos vamos a la pagina indicada
 		elementos.get(page).click();
 	}
 
-	public static void deleteMark(WebDriver driver, String markDescription) {
+	public static void deleteMark(WebDriver driver, String markDescription) {// TODO - modificar
 		List<WebElement> elementos = checkElement(driver, "free",
 				"//td[contains(text(), '"+ markDescription +"')]/following-sibling::*/a[contains(@href, 'mark/delete')]");
 		elementos.get(0).click();

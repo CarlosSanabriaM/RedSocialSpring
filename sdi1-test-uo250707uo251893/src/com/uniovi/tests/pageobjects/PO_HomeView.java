@@ -4,9 +4,11 @@ import org.openqa.selenium.WebDriver;
 
 public class PO_HomeView extends PO_NavView {
 
+	/**
+	 * Comprueba que se carga el saludo de bienvenida en el idioma indicado
+	 */
 	static public void checkWelcome(WebDriver driver, int language) {
-		// Esperamos a que se cargue el saludo de bienvenida en el idioma indicado
-		checkElement(driver, "text", p.getString("welcome.message", language));
+		checkElement(driver, "text", p.getString("Index.welcome.message", language));
 	}
 
 	static public void checkChangeIdiom(WebDriver driver, String textIdiom1, 

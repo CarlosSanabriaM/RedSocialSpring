@@ -14,17 +14,17 @@ import com.uniovi.tests.pageobjects.PO_HomeView;
 import com.uniovi.tests.pageobjects.PO_LoginView;
 import com.uniovi.tests.pageobjects.PO_PrivateView;
 import com.uniovi.tests.pageobjects.PO_Properties;
-import com.uniovi.tests.pageobjects.PO_RegisterView;
+import com.uniovi.tests.pageobjects.PO_SignupView;
 import com.uniovi.tests.pageobjects.PO_View;
 import com.uniovi.tests.util.SeleniumUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class NotaneitorTests {
 	
-	//static String PathFirefox = "C:\\Path\\FirefoxPortable.exe"; // Windows
-	static String PathFirefox = "/Applications/Firefox_46.0.app/Contents/MacOS/firefox-bin"; // Mac
+	// Descomentar uno de los dos paths en función del SO:
+//	static String PathFirefox = "C:\\Path\\FirefoxPortable.exe"; 								// Windows
+	static String PathFirefox = "/Applications/Firefox_46.0.app/Contents/MacOS/firefox-bin"; 	// Mac
 	
-	//Común a Windows y a MACOSX
 	static WebDriver driver = getDriver(PathFirefox);
 	static String URL = "http://localhost:8090";
 
@@ -33,6 +33,12 @@ public class NotaneitorTests {
 		WebDriver driver = new FirefoxDriver();
 		return driver;
 	}
+	
+	// Credenciales de inicio de sesión de varios usuarios
+	private static String adminEmail = "admin@gmail.com";
+	private static String adminPassword = "1234";
+	private static String user1Email = "user1@gmail.com";
+	private static String user1Password = "1234";
 
 	/**
 	 * Antes de cada prueba se navega al URL home de la aplicaciónn
@@ -57,23 +63,22 @@ public class NotaneitorTests {
 	@BeforeClass
 	static public void begin() {
 		driver.navigate().to(URL);
-		// Vamos al login, entramos como administrador y comprobamos que entramos correctamente
-		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, "99999988F", "123456");
 		
-		// Pinchamos en la opción del menú de Reiniciar BD y comprobamos que se muestra el mensaje correcto
-		PO_PrivateView.clickLinkAndCheckTextAppears(driver, "/admin/restart", "text", "Base de datos reiniciada");
+		// Entramos como administrador y pinchamos en la opción de Reiniciar BD
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, adminEmail, adminPassword);
+		PO_PrivateView.clickLinkAndCheckSomethingAppears(driver, "aAdminRestart", "text", "Base de datos reiniciada");
 
 		// Ahora nos desconectamos
 		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
 
-	// Al finalizar la última prueba
+	/**
+	 * Al finalizar la última prueba cerramos el navegador
+	 */
 	@AfterClass
 	static public void end() {
-		// Cerramos el navegador al finalizar las pruebas
 		driver.quit();
 	}
-	
 	
 	//PR01. Acceder a la página principal /
 	@Test
@@ -84,14 +89,14 @@ public class NotaneitorTests {
 	// PR02. OPción de navegación. Pinchar en el enlace Registro en la página home
 	@Test
 	public void PR02() {
-		PO_HomeView.clickLinkAndCheckTextAppears(driver, "signup", "class", "btn btn-primary");
+		PO_HomeView.clickLinkAndCheckSomethingAppears(driver, "signup", "class", "btn btn-primary");
 	}
 
 	// PR03. OPción de navegación. Pinchar en el enlace Identificate en la página
 	// home
 	@Test
 	public void PR03() {
-		PO_HomeView.clickLinkAndCheckTextAppears(driver, "login", "class", "btn btn-primary");
+		PO_HomeView.clickLinkAndCheckSomethingAppears(driver, "login", "class", "btn btn-primary");
 	}
 	
 	// PR04. OPción de navegación. Cambio de idioma de Español a Ingles y vuelta a
@@ -105,8 +110,8 @@ public class NotaneitorTests {
 	// PR05. Prueba del formulario de registro. registro con datos correctos
 	@Test
 	public void PR05() {
-		PO_RegisterView.goToSignup(driver);
-		PO_RegisterView.fillFormAndCheckWasOk(driver, "77777778A", "Josefo", "Perez", "77777", "77777");
+		PO_SignupView.goToSignup(driver);
+		PO_SignupView.fillFormAndCheckWasOk(driver, "77777778A", "Josefo", "Perez", "77777", "77777");
 	}
 	
 	//PR06. Prueba del formulario de registro. DNI repetido en la BD, Nombre corto, .... pagination
@@ -114,26 +119,26 @@ public class NotaneitorTests {
 	@Test
 	public void PR06() {
 		// Vamos al formulario de registro
-		PO_HomeView.clickLinkAndCheckTextAppears(driver, "signup", "class", "btn btn-primary");
+		PO_HomeView.clickLinkAndCheckSomethingAppears(driver, "signup", "class", "btn btn-primary");
 		
 		// Rellenamos el formulario y comprobamos el error de DNI repetido. 
-		PO_RegisterView.fillFormAndCheckErrorKey(driver, "99999990A", "Josefo", "Perez", "77777", "77777", 
+		PO_SignupView.fillFormAndCheckErrorKey(driver, "99999990A", "Josefo", "Perez", "77777", "77777", 
 				"Error.signup.dni.duplicate", PO_Properties.getSPANISH());
 		
 		// Rellenamos el formulario y comprobamos el error de Nombre corto
-		PO_RegisterView.fillFormAndCheckErrorKey(driver, "99999990B", "Jose", "Perez", "77777", "77777",  
+		PO_SignupView.fillFormAndCheckErrorKey(driver, "99999990B", "Jose", "Perez", "77777", "77777",  
 				"Error.signup.name.length", PO_Properties.getSPANISH());
 		
 		// Rellenamos el formulario y comprobamos el error de Apellidos cortos
-		PO_RegisterView.fillFormAndCheckErrorKey(driver, "99999990B", "Josefo", "Per", "77777", "77777",   
+		PO_SignupView.fillFormAndCheckErrorKey(driver, "99999990B", "Josefo", "Per", "77777", "77777",   
 				"Error.signup.lastName.length", PO_Properties.getSPANISH());
 		
 		// Rellenamos el formulario y comprobamos el error de Contraseña corta
-		PO_RegisterView.fillFormAndCheckErrorKey(driver, "99999990B", "Josefo", "Perez", "777", "777",   
+		PO_SignupView.fillFormAndCheckErrorKey(driver, "99999990B", "Josefo", "Perez", "777", "777",   
 				"Error.signup.password.length", PO_Properties.getSPANISH());
 
 		// Rellenamos el formulario y comprobamos el error de Contraseña corta
-		PO_RegisterView.fillFormAndCheckErrorKey(driver, "99999990B", "Josefo", "Perez", "77777", "88888",   
+		PO_SignupView.fillFormAndCheckErrorKey(driver, "99999990B", "Josefo", "Perez", "77777", "88888",   
 				"Error.signup.passwordConfirm.coincidence", PO_Properties.getSPANISH());
 	}
 
@@ -158,7 +163,7 @@ public class NotaneitorTests {
 	// PR07. Loguearse sin exito desde el ROLE de Estudiante, 99999990A, 111111 (contraseña mal)
 	@Test
 	public void PR10() {
-		PO_LoginView.goToLoginFillFormAndCheckWasWrong(driver, "99999990A", "111111");
+		//PO_LoginView.goToLoginFillFormAndCheckWasWrong(driver, "99999990A", "111111");
 	}
 	
 	// PR07. Loguearse con exito desde el ROLE de Estudiante y desconectarse, 99999990A, 123456
@@ -204,7 +209,7 @@ public class NotaneitorTests {
 		PO_PrivateView.clickDropdownMenuOption(driver, "marks-menu", "mark/add");
 				
 		// Ahora vamos a rellenar la nota.
-		PO_PrivateView.fillFormAddMark(driver, 3, "Nota Nueva 1", "8");
+		PO_PrivateView.fillFormAddPost(driver, 3, "Nota Nueva 1", "8");
 		
 		//Nos vamos a la última página de la paginación
 		PO_PrivateView.clickNavigationMenuOption(driver, 3);
@@ -212,7 +217,7 @@ public class NotaneitorTests {
 		PO_View.checkElement(driver, "text", "Nota Nueva 1");
 		
 		// Ahora nos desconectamos
-		PO_PrivateView.clickLinkAndCheckTextAppears(driver, "logout", "text", "Identifícate");
+		PO_PrivateView.clickLinkAndCheckSomethingAppears(driver, "logout", "text", "Identifícate");
 	}
 
 	// PRN. Loguearse como profesor, vamos a la ultima página y Eliminamos la Nota
