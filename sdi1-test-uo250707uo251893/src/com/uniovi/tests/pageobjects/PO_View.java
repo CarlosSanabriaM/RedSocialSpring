@@ -39,6 +39,7 @@ public class PO_View {
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "text", p.getString(key, locale), getTimeout());
 		return elementos;
 	}
+	
 	/**
 	 *  Espera por la visibilidad de un elemento/s en la vista actualmente cargandose en driver..
 	 * 
