@@ -15,36 +15,39 @@
 		
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
-				<li><a href="/" th:text="#{Nav.home}">Home</a></li>
+				<li><a id="aHome" href="/" th:text="#{Nav.home}">Home</a></li>
 				
 				<li id= "users-menu" class="dropdown" sec:authorize="isAuthenticated()">
- 					<a class="dropdown-toggle" data-toggle="dropdown" href="#" th:text="#{Nav.users}">
+ 					<a id="aDropdownUsersMenu" class="dropdown-toggle" data-toggle="dropdown" 
+ 						href="#" th:text="#{Nav.users}">
  						Usuarios <span class="caret"></span>
  					</a>
 
  					<ul class="dropdown-menu">
  						<li>
- 							<a href="/user/list" th:text="#{Nav.users.see.all}">Ver Todos</a>
+ 							<a id="aUserList" href="/user/list" th:text="#{Nav.users.see.all}">Ver Todos</a>
  						</li>
  						<li sec:authorize="hasRole('ROLE_PUBLIC')">
- 							<a href="/user/friend/list" th:text="#{Nav.users.see.friends}">Ver Amigos</a>
+ 							<a id="aUserFriendList" href="/user/friend/list" th:text="#{Nav.users.see.friends}">Ver Amigos</a>
  						</li>
  						<li sec:authorize="hasRole('ROLE_PUBLIC')">
- 							<a href="/user/friend/request/list" th:text="#{Nav.users.see.friendRequests}">Ver Solicitudes de Amistad</a>
+ 							<a id="aUserFriendRequestList" href="/user/friend/request/list" 
+ 								th:text="#{Nav.users.see.friendRequests}">Ver Solicitudes de Amistad</a>
  						</li>
  					</ul>
  				</li>
 				
 				<li id= "marks-menu" class="dropdown" sec:authorize="hasRole('ROLE_PUBLIC')">
- 					<a class="dropdown-toggle" data-toggle="dropdown" href="#" th:text="#{Nav.posts}">
+ 					<a id="aDropdownMarksMenu" class="dropdown-toggle" data-toggle="dropdown" 
+ 						href="#" th:text="#{Nav.posts}">
  						Publicaciones <span class="caret"></span>
  					</a>
 	 				<ul class="dropdown-menu">
 		 				<li>
-		 					<a href="/post/add" th:text="#{Nav.posts.add}">Nueva publicación</a>
+		 					<a id="aPostAdd" href="/post/add" th:text="#{Nav.posts.add}">Nueva publicación</a>
 		 				</li>
 		 				<li>
-		 					<a href="/post/list" th:text="#{Nav.posts.see.mine}">Ver mis publicaciones</a>
+		 					<a id="aPostList" href="/post/list" th:text="#{Nav.posts.see.mine}">Ver mis publicaciones</a>
 		 				</li>
 	 				</ul>
  				</li>
@@ -78,19 +81,19 @@
 				</li>
 
 				<li sec:authorize="!isAuthenticated()">
-					<a href="/signup" th:text="#{signup.message}"> 
+					<a id="aSignup" href="/signup" th:text="#{signup.message}"> 
 						<span class="glyphicon glyphicon-user"></span> 
 						Registrate
 					</a>
 				</li>
 				<li sec:authorize="!isAuthenticated()">
-					<a href="/login" th:text="#{login.message}"> 
+					<a id="aLogin" href="/login" th:text="#{login.message}"> 
 						<span class="glyphicon glyphicon-log-in"></span> 
 						Identifícate
 					</a>
 				</li>
 				<li sec:authorize="isAuthenticated()">
-					<a href="/logout" th:text="#{logout.message}"> 
+					<a id="aLogout" href="/logout" th:text="#{logout.message}"> 
 						<span class="glyphicon glyphicon-log-out"></span> 
 						Desconectarse
 					</a>
