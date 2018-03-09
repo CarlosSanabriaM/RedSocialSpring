@@ -16,7 +16,7 @@
       <label class="control-label col-sm-2" for="title" 
       	th:text="#{Label.post.add.title}">Título:</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" name="title" 
+        <input id="inputTitle" type="text" class="form-control" name="title" 
         		th:placeholder="#{Placeholder.post.add.title}" required="true" />
         <span class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
       </div>
@@ -26,7 +26,7 @@
       <label class="control-label col-sm-2" for="text" 
       	th:text="#{Label.post.add.text}">Texto:</label>
       <div class="col-sm-10">          
-        <textarea class="form-control" name="text" rows="8"
+        <textarea id="inputText" class="form-control" name="text" rows="8"
         		th:placeholder="#{Placeholder.post.add.text}" required="true">
         	</textarea>
         <span class="text-danger" th:if="${#fields.hasErrors('text')}" th:errors="*{text}">
@@ -35,7 +35,8 @@
 
     <div class="form-group">        
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-primary" th:text="#{Submit.post.add}">Crear</button>
+        <button id="buttonSubmit" type="submit" class="btn btn-primary" 
+        		th:text="#{Submit.post.add}">Crear</button>
       </div>
     </div>
     

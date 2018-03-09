@@ -12,10 +12,10 @@
 
 		<form class="navbar-form" action="/user/list">
 			<div class="form-group">
-				<input name="searchText" type="text" class="form-control" size="50"
-					th:placeholder="#{Placeholder.user.list.search}">
+				<input id="inputSearchText" name="searchText" type="text" 
+					class="form-control" size="50" th:placeholder="#{Placeholder.user.list.search}">
 			</div>
-			<button type="submit" class="btn btn-default"
+			<button id="buttonSearchText" type="submit" class="btn btn-default"
 				th:text="#{Submit.user.list.search}">Buscar</button>
 		</form>
 
