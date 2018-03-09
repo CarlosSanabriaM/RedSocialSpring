@@ -40,9 +40,9 @@ public class PO_AdminLoginView extends PO_NavView {
 	 */
 	static public void goToAdminLoginAndfillForm(WebDriver driver, String usernamep, String passwordp) {
 		// Vamos a /login y esperamos a que cargue el enlace a /admin/login
-		PO_HomeView.clickLinkAndCheckSomethingAppears(driver, "aLogin", "id", "aAdminLogin");
+		PO_HomeView.clickLinkAndCheckElement(driver, "aLogin", "id", "aAdminLogin");
 		// Clickamos el enlace /admin/login y cuando cargue, rellenamos el formulario
-		PO_HomeView.clickLinkAndCheckSomethingAppears(driver, "aAdminLogin", "id", "buttonSubmit");
+		PO_HomeView.clickLinkAndCheckElement(driver, "aAdminLogin", "id", "buttonSubmit");
 		PO_AdminLoginView.fillForm(driver, usernamep, passwordp);
 	}
 

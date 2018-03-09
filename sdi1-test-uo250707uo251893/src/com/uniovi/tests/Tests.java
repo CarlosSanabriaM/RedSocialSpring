@@ -1,7 +1,5 @@
 package com.uniovi.tests;
 
-import static org.junit.Assert.assertTrue;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -13,7 +11,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.uniovi.tests.pageobjects.PO_AdminLoginView;
-import com.uniovi.tests.pageobjects.PO_HomeView;
 import com.uniovi.tests.pageobjects.PO_LoginView;
 import com.uniovi.tests.pageobjects.PO_PrivateView;
 import com.uniovi.tests.pageobjects.PO_Properties;
@@ -22,7 +19,7 @@ import com.uniovi.tests.pageobjects.PO_View;
 import com.uniovi.tests.util.SeleniumUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class NotaneitorTests {
+public class Tests {
 	
 	// Descomentar uno de los dos paths en función del SO:
 //	static String PathFirefox = "C:\\Path\\FirefoxPortable.exe"; 								// Windows
@@ -70,7 +67,7 @@ public class NotaneitorTests {
 		
 		// Entramos como administrador y pinchamos en la opción de Reiniciar BD
 		PO_AdminLoginView.goToAdminLoginFillFormAndCheckWasOk(driver, adminEmail, adminPassword);
-		PO_PrivateView.clickLinkAndCheckSomethingAppears(driver, "aAdminRestart", "text", "Base de datos reiniciada");
+		PO_PrivateView.clickLinkAndCheckElement(driver, "aAdminRestart", "text", "Base de datos reiniciada");
 		
 		// Ahora nos desconectamos
 		PO_PrivateView.logoutAndCheckWasOk(driver);
@@ -92,6 +89,7 @@ public class NotaneitorTests {
 		PO_SignupView.goToSignup(driver);
 		PO_SignupView.fillFormAndCheckWasOk(driver, 
 				"newUser@gmail.com", "NewUserName", "NewUserLastName", "1234", "1234");
+		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
 	
 	/**
@@ -111,6 +109,8 @@ public class NotaneitorTests {
 	@Test
 	public void PR03() {
 		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		
+		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
 	
 	
@@ -122,6 +122,62 @@ public class NotaneitorTests {
 		PO_LoginView.goToLoginFillFormAndCheckWasWrong(driver, 
 				"notExists@gmail.com", "123456", PO_Properties.getSPANISH());
 	}
+
+	/**
+	 * 3.1 [LisUsrVal] Acceso al listado de usuarios desde un usuario en sesión.
+	 */
+	@Test
+	public void PR05() {
+		// Iniciamos sesión, pinchamos en "Usuarios -> Ver Todos" en el menú de navegación
+		// (para asegurarnos de que dicho enlace también funciona, aunque ya estemos en dicho listado)
+		// y comprobamos que aparece el texto "Todos los usuarios"
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		PO_PrivateView.clickLinkAndCheckElement(driver, "aDropdownUsersMenu", "id", "aUserList");
+		PO_PrivateView.clickLinkAndCheckElement(driver, "aUserList", "text", "Todos los usuarios");
+		
+		PO_PrivateView.logoutAndCheckWasOk(driver);
+	}
+	
+	/**
+	 * 3.2 [LisUsrInVal] Intento de acceso con URL desde un usuario no identificado al listado 
+	 * de usuarios desde un usuario en sesión. Debe producirse un acceso no permitido a vistas privadas.
+	 */
+	@Test
+	public void PR06() {
+		// Acceder al listado de usuarios sin estar logeados nos lleva a la página de login.
+		driver.navigate().to("http://localhost:8090/user/list");
+		PO_View.checkElement(driver, "text", "Identifícate");
+	}
+
+	/**
+	 * 4.1 [BusUsrVal] Realizar una búsqueda valida en el listado de usuarios desde un usuario en sesión.
+	 */
+	@Test
+	public void PR07() {
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		
+		// Realizamos una busqueda por el texto "Mar" y comprobamos que 
+		// sólo salen dos usuarios, cuyos nombres son María y Marta
+		PO_PrivateView.searchText(driver, "Mar");
+		PO_PrivateView.checkNumUsers(driver, 2);
+		PO_PrivateView.checkElement(driver, "text", "María");
+		PO_PrivateView.checkElement(driver, "text", "Marta");
+		
+		PO_PrivateView.logoutAndCheckWasOk(driver);
+	}
+	
+	/**
+	 * 4.2 [BusUsrInVal] Intento de acceso con URL a la búsqueda de usuarios desde 
+	 * un usuario no identificado. Debe producirse un acceso no permitido a vistas privadas.
+	 */
+	@Test
+	public void PR08() {
+		// Acceder a la busqueda de usuarios sin estar logeados nos lleva a la página de login.
+		driver.navigate().to("http://localhost:8090/user/list?searchText=Mar");
+		PO_View.checkElement(driver, "text", "Identifícate");
+	}
+	
+
 	
 /*	
 	//PR01. Acceder a la página principal /

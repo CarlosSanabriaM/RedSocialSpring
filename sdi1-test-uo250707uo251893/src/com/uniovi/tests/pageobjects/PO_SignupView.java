@@ -70,7 +70,7 @@ public class PO_SignupView extends PO_NavView {
 	 * Nos lleva al formulario de registro
 	 */
 	public static void goToSignup(WebDriver driver) {
-		PO_HomeView.clickLinkAndCheckSomethingAppears(driver, "aSignup", "id", "buttonSubmit");
+		PO_HomeView.clickLinkAndCheckElement(driver, "aSignup", "id", "buttonSubmit");
 	}
 
 }
