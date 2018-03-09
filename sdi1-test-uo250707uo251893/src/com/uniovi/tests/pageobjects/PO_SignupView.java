@@ -41,7 +41,7 @@ public class PO_SignupView extends PO_NavView {
 		passwordConfirm.sendKeys(passwordconfp);
 		
 		// Pulsar el boton de Alta.
-		By boton = By.className("buttonSubmit");
+		By boton = By.id("buttonSubmit");
 		driver.findElement(boton).click();
 	}
 	
@@ -70,7 +70,7 @@ public class PO_SignupView extends PO_NavView {
 	 * Nos lleva al formulario de registro
 	 */
 	public static void goToSignup(WebDriver driver) {
-		PO_HomeView.clickLinkAndCheckSomethingAppears(driver, "signup", "id", "buttonSubmit");
+		PO_HomeView.clickLinkAndCheckSomethingAppears(driver, "aSignup", "id", "buttonSubmit");
 	}
 
 }

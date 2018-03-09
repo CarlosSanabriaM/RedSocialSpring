@@ -40,9 +40,10 @@ public class NotaneitorTests {
 	// Credenciales de inicio de sesión de varios usuarios
 	private static String adminEmail = "admin@gmail.com";
 	private static String adminPassword = "1234";
+	
 	private static String user1Email = "user1@gmail.com";
 	private static String user1Password = "1234";
-
+	
 	/**
 	 * Antes de cada prueba se navega al URL home de la aplicaciónn
 	 */
@@ -83,11 +84,44 @@ public class NotaneitorTests {
 		driver.quit();
 	}
 	
+	/**
+	 * 1.1 [RegVal] Registro de Usuario con datos válidos.
+	 */
 	@Test
 	public void PR01() {
-		assertTrue(true);
+		PO_SignupView.goToSignup(driver);
+		PO_SignupView.fillFormAndCheckWasOk(driver, 
+				"newUser@gmail.com", "NewUserName", "NewUserLastName", "1234", "1234");
 	}
 	
+	/**
+	 * 1.2 [RegInval] Registro de Usuario con datos inválidos (repetición de contraseña invalida).
+	 */
+	@Test
+	public void PR02() {
+		PO_SignupView.goToSignup(driver);
+		PO_SignupView.fillFormAndCheckErrorKey(driver, 
+				"newUser2@gmail.com", "NewUserName2", "NewUserLastName2", "1234", "12345", 
+				"Error.signup.passwordConfirm.coincidence", PO_Properties.getSPANISH());
+	}
+	
+	/**
+	 * 2.1 [InVal] Inicio de sesión con datos válidos.
+	 */
+	@Test
+	public void PR03() {
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+	}
+	
+	
+	/**
+	 * 2.2 [InInVal] Inicio de sesión con datos inválidos (usuario no existente en la aplicación).
+	 */
+	@Test
+	public void PR04() {
+		PO_LoginView.goToLoginFillFormAndCheckWasWrong(driver, 
+				"notExists@gmail.com", "123456", PO_Properties.getSPANISH());
+	}
 	
 /*	
 	//PR01. Acceder a la página principal /
