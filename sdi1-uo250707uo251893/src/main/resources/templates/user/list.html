@@ -8,10 +8,12 @@
 	<nav th:replace="fragments/nav" />
 	
 	<div class="container">
-		
+	
 		<p id="userAuthenticatedAs">
-		  <span 	th:text="#{User.list.authenticated.as.user}">Usuario autenticado: </span>
-		  <span sec:authentication="principal.username" th:inline="text">ejemplo@gmail.com</span>
+		  <span 	th:text="#{User.list.authenticated.as.user}" 
+		  	th:remove="tag">Usuario autenticado: </span>
+		  <span sec:authentication="principal.username" 
+		  	th:inline="text" th:remove="tag">ejemplo@gmail.com</span>
 		</p>
 		
 		<h2 th:text="#{Title.user.list}">Usuarios</h2>

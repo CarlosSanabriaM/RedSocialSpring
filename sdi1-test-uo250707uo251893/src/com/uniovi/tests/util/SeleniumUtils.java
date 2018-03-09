@@ -21,7 +21,7 @@ public class SeleniumUtils {
 	 */
 	static public void textoPresentePagina(WebDriver driver, String texto)
 	{
-		List<WebElement> list = driver.findElements(By.xpath("//*[contains(text(),'" + texto + "')]"));		
+		List<WebElement> list = driver.findElements(By.xpath("//*[contains(normalize-space(text()),'" + texto + "')]"));		
 		assertTrue("Texto " + texto + " no localizado!", list.size() > 0);			
 	}
 
@@ -32,7 +32,7 @@ public class SeleniumUtils {
 	 */
 	static public void textoNoPresentePagina(WebDriver driver, String texto)
 	{
-		List<WebElement> list = driver.findElements(By.xpath("//*[contains(text(),'" + texto + "')]"));		
+		List<WebElement> list = driver.findElements(By.xpath("//*[contains(normalize-space(text()),'" + texto + "')]"));		
 		assertTrue("Texto " + texto + " aun presente !", list.size() == 0);			
 	}
 
@@ -45,7 +45,7 @@ public class SeleniumUtils {
 	static public void EsperaCargaPaginaNoTexto(WebDriver driver, String texto, int timeout)
 	{
 		Boolean resultado = 
-				(new WebDriverWait(driver, timeout)).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(text(),'" + texto + "')]")));
+				(new WebDriverWait(driver, timeout)).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//*[contains(normalize-space(text()),'" + texto + "')]")));
 
 		assertTrue(resultado);	
 	}
@@ -83,7 +83,7 @@ public class SeleniumUtils {
 		String busqueda;
 		if (criterio.equals("id")) busqueda = "//*[contains(@id,'" + text + "')]";
 		else if (criterio.equals("class")) busqueda = "//*[contains(@class,'" + text + "')]";
-		else if (criterio.equals("text")) busqueda = "//*[contains(text(),'" + text + "')]";
+		else if (criterio.equals("text")) busqueda = "//*[contains(normalize-space(text()),'" + text + "')]";
 		else if (criterio.equals("free")) busqueda = text;
 		else busqueda = "//*[contains("+criterio+",'" + text + "')]";
 

@@ -33,7 +33,7 @@ public class PO_LoginView extends PO_NavView {
 	 * @param passwordp: valor para el campo password
 	 */
 	static public void goToLoginAndfillForm(WebDriver driver, String usernamep, String passwordp) {
-		PO_HomeView.clickLinkAndCheckSomethingAppears(driver, "login", "id", "buttonSubmit");
+		PO_HomeView.clickLinkAndCheckSomethingAppears(driver, "aLogin", "id", "buttonSubmit");
 		PO_LoginView.fillForm(driver, usernamep, passwordp);
 	}
 

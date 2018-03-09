@@ -16,7 +16,7 @@ public class PO_PrivateView extends PO_NavView {
 	 * @param driver
 	 */
 	public static void logoutAndCheckWasOk(WebDriver driver) {
-		clickLinkAndCheckSomethingAppears(driver, "logout", "text", "Identifícate");
+		clickLinkAndCheckSomethingAppears(driver, "aLogout", "text", "Identifícate");
 	}
 	
 	public static void fillFormAddPost(WebDriver driver, // TODO . modificar!!
