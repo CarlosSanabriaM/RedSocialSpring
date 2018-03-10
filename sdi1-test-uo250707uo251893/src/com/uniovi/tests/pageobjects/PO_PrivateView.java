@@ -7,7 +7,6 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 
 public class PO_PrivateView extends PO_NavView {
 	
@@ -19,28 +18,29 @@ public class PO_PrivateView extends PO_NavView {
 		clickLinkAndCheckElement(driver, "aLogout", "text", "Identifícate");
 	}
 	
-	public static void fillFormAddPost(WebDriver driver, // TODO . modificar!!
-			int userOrder, String descriptionp, String scorep) {
-		
+	/**
+	 * Rellena el formulario de crear una publicación
+	 * @param driver
+	 * @param titlep
+	 * @param textp
+	 */
+	public static void fillFormAddPost(WebDriver driver, String titlep, String textp) {
 		//Si ya está cargado no espera, y si no está cargado espera a que se cargue
-		checkElement(driver, "id", "submitButton");
+		checkElement(driver, "id", "buttonSubmit");
 		
-		// Seleccionamos el alumnos userOrder
-		new Select(driver.findElement(By.id("user"))).selectByIndex(userOrder);
+		// Rellenemos el campo de "Título"
+		WebElement title = driver.findElement(By.name("title"));
+		title.click();
+		title.clear();
+		title.sendKeys(titlep);
 		
-		// Rellenemos el campo de descripción
-		WebElement description = driver.findElement(By.name("description"));
-		description.click();
-		description.clear();
-		description.sendKeys(descriptionp);
+		// Rellenemos el campo "Texto"
+		WebElement text = driver.findElement(By.name("text"));
+		text.click();
+		text.clear();
+		text.sendKeys(textp);
 		
-		// Rellenemos el campo de puntuación
-		WebElement score = driver.findElement(By.name("score"));
-		score.click();
-		score.clear();
-		score.sendKeys(scorep);
-		
-		By boton = By.id("submitButton");
+		By boton = By.id("buttonSubmit");
 		driver.findElement(boton).click();
 	}
 	

@@ -128,7 +128,7 @@ public class Tests {
 	 */
 	@Test
 	public void PR05() {
-		// Iniciamos sesión, pinchamos en "Usuarios -> Ver Todos" en el menú de navegación
+		// Iniciamos sesión, pinchamos en "Usuarios" -> "Ver Todos" en el menú de navegación
 		// (para asegurarnos de que dicho enlace también funciona, aunque ya estemos en dicho listado)
 		// y comprobamos que aparece el texto "Todos los usuarios"
 		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
@@ -177,6 +177,55 @@ public class Tests {
 		PO_View.checkElement(driver, "text", "Identifícate");
 	}
 	
+	/**
+	 * 9.1 [PubVal] Crear una publicación con datos válidos. 
+	 */
+	@Test
+	public void PR14() {
+		// Iniciamos sesión, pinchamos en "Publicaciones" -> "Nueva Publicación" en el menú de navegación
+		// y comprobamos que aparece el texto "Nueva publicación"
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		PO_PrivateView.clickLinkAndCheckElement(driver, "aDropdownPostsMenu", "id", "aPostAdd");
+		PO_PrivateView.clickLinkAndCheckElement(driver, "aPostAdd", "text", "Nueva publicación");
+		
+		// Esperamos a que cargue y rellenamos el formulario para crear una publicación
+		String text = "Texto nueva publicación";
+		String title = "Título nueva publicación";
+		PO_PrivateView.fillFormAddPost(driver, title, text);
+		
+		// Nos envia directamente al listado de publicaciones del usuario, 
+		// así que buscamos el titulo de la nueva publicación que hemos creado
+		PO_PrivateView.checkElement(driver, "text", title);
+		
+		PO_PrivateView.logoutAndCheckWasOk(driver);
+	}
+	/**
+	 * 10.1 [LisPubVal] Acceso al listado de publicaciones desde un usuario en sesión.
+	 */
+	@Test
+	public void PR15() {
+		// Iniciamos sesión, pinchamos en "Publicaciones" -> "Ver mis Publicaciones" 
+		// en el menú de navegación y comprobamos que aparece el texto "Mis publicaciones"
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		PO_PrivateView.clickLinkAndCheckElement(driver, "aDropdownPostsMenu", "id", "aPostList");
+		PO_PrivateView.clickLinkAndCheckElement(driver, "aPostList", "text", "Mis publicaciones");
+		
+		// Comprobamos tambien que el usuario user1 tiene 5 publicaciones (tenia 4 y creamos una nueva)
+		PO_PrivateView.checkNumPosts(driver, 5);
+		
+		PO_PrivateView.logoutAndCheckWasOk(driver);
+	}
+	/**
+	 * 11.1 [LisPubAmiVal] Listar las publicaciones de un usuario amigo 
+	 */
+	@Test
+	public void PR16() {
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		
+		
+		
+		PO_PrivateView.logoutAndCheckWasOk(driver);
+	}
 
 	
 /*	
