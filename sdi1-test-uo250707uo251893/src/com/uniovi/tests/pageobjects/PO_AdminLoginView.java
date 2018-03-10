@@ -7,7 +7,8 @@ import org.openqa.selenium.WebElement;
 public class PO_AdminLoginView extends PO_NavView {
 
 	/**
-	 * Rellena el formulario
+	 * Espera a que se cargue el formulario de login del administrador y lo rellena con los datos indicados
+	 * 
 	 * @param driver: apuntando al navegador abierto actualmente
 	 * @param usernamep: valor para el campo username
 	 * @param passwordp: valor para el campo password
@@ -34,6 +35,7 @@ public class PO_AdminLoginView extends PO_NavView {
 	
 	/**
 	 * Va al formulario de login del administrador y lo rellena con los datos indicados
+	 * 
 	 * @param driver: apuntando al navegador abierto actualmente
 	 * @param usernamep: valor para el campo username
 	 * @param passwordp: valor para el campo password
@@ -49,6 +51,7 @@ public class PO_AdminLoginView extends PO_NavView {
 	/**
 	 * Va al formulario de login del administrador, lo rellena con los datos indicados y 
 	 * comprueba que entra correctamente
+	 * 
 	 * @param driver: apuntando al navegador abierto actualmente
 	 * @param usernamep: valor para el campo username
 	 * @param passwordp: valor para el campo password
@@ -62,9 +65,9 @@ public class PO_AdminLoginView extends PO_NavView {
 	/**
 	 * Va al formulario de login del administrador, lo rellena con los datos indicados y 
 	 * comprueba que se produce el error indicado en el idioma indicado
-	 * @param driver: apuntando al navegador abierto actualmente
-	 * @param usernamep: valor para el campo username
-	 * @param passwordp: valor para el campo password
+	 * 
+	 * @param errorKey: clave del error en el fichero de propiedades
+	 * @param language: idioma en el que se va a mostrar el error
 	 */
 	static public void goToAdminLoginFillFormAndCheckWasWrong(WebDriver driver, String usernamep, 
 			String passwordp, String errorKey, int language) {

@@ -134,8 +134,9 @@ public class Tests {
 		// (para asegurarnos de que dicho enlace también funciona, aunque ya estemos en dicho listado)
 		// y comprobamos que aparece el texto "Todos los usuarios"
 		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
-		PO_PrivateView.clickLinkAndCheckElement(driver, "aDropdownUsersMenu", "id", "aUserList");
-		PO_PrivateView.clickLinkAndCheckElement(driver, "aUserList", "text", "Todos los usuarios");
+		
+		PO_PrivateView.clickDropdownMenuOptionAndCheckElement(driver, 
+				"aDropdownUsersMenu", "aUserList", "text", "Todos los usuarios");
 		
 		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
@@ -231,12 +232,13 @@ public class Tests {
 		// Iniciamos sesión, pinchamos en "Publicaciones" -> "Nueva Publicación" en el menú de navegación
 		// y comprobamos que aparece el texto "Nueva publicación"
 		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
-		PO_PrivateView.clickLinkAndCheckElement(driver, "aDropdownPostsMenu", "id", "aPostAdd");
-		PO_PrivateView.clickLinkAndCheckElement(driver, "aPostAdd", "text", "Nueva publicación");
+		
+		PO_PrivateView.clickDropdownMenuOptionAndCheckElement(driver, 
+				"aDropdownPostsMenu", "aPostAdd", "text", "Nueva publicación");
 		
 		// Esperamos a que cargue y rellenamos el formulario para crear una publicación
-		String text = "Texto nueva publicación";
 		String title = "Título nueva publicación";
+		String text = "Texto nueva publicación";
 		PO_PrivateView.fillFormAddPost(driver, title, text);
 		
 		// Nos envia directamente al listado de publicaciones del usuario, 
@@ -253,9 +255,10 @@ public class Tests {
 		// Iniciamos sesión, pinchamos en "Publicaciones" -> "Ver mis Publicaciones" 
 		// en el menú de navegación y comprobamos que aparece el texto "Mis publicaciones"
 		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user2Email, user2Password);
-		PO_PrivateView.clickLinkAndCheckElement(driver, "aDropdownPostsMenu", "id", "aPostList");
-		PO_PrivateView.clickLinkAndCheckElement(driver, "aPostList", "text", "Mis publicaciones");
 		
+		PO_PrivateView.clickDropdownMenuOptionAndCheckElement(driver, 
+				"aDropdownPostsMenu", "aPostList", "text", "Mis publicaciones");
+				
 		// Comprobamos tambien que el usuario user2 tiene 4 publicaciones
 		PO_PrivateView.checkNumPosts(driver, 4);
 		
@@ -326,9 +329,9 @@ public class Tests {
 	public void PR22() {
 		PO_AdminLoginView.goToAdminLoginFillFormAndCheckWasOk(driver, adminEmail, adminPassword);
 		
-		PO_PrivateView.clickLinkAndCheckElement(driver, "aDropdownUsersMenu", "id", "aUserList");
-		PO_PrivateView.clickLinkAndCheckElement(driver, "aUserList", "text", "Todos los usuarios");
-		
+		PO_PrivateView.clickDropdownMenuOptionAndCheckElement(driver, 
+				"aDropdownUsersMenu", "aUserList", "text", "Todos los usuarios");
+
 		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
 	
@@ -340,8 +343,8 @@ public class Tests {
 	public void PR23() {
 		PO_AdminLoginView.goToAdminLoginFillFormAndCheckWasOk(driver, adminEmail, adminPassword);
 		
-		// Eliminamos al user1 y comprobamos que ya no aparece
-		PO_PrivateView.deleteUserAndCheckWasOk(driver, user1Email);
+		// Eliminamos al user2 y comprobamos que ya no aparece
+		PO_PrivateView.deleteUserAndCheckWasOk(driver, "user2@gmail.com");
 		
 		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
@@ -354,7 +357,9 @@ public class Tests {
 	public void PR24() {
 		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
 		
-		
+		driver.navigate().to("http://localhost:8090/user/delete/" + 20); //XXX - Como saco el id de un usuario que exista si el id cambia cada vez que se reinica la BD??? No falla porque exista o no el usuario con ese id, nos lleva a /error
+		PO_View.checkElement(driver, "text", "¡Se ha producido un error!");
+		PO_PrivateView.clickLinkAndCheckElement(driver, "aIndex", "text", "¡Bienvenidos a Red Social!");
 		
 		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}

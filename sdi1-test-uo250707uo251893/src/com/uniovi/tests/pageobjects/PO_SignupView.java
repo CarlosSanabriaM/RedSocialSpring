@@ -7,7 +7,23 @@ import org.openqa.selenium.WebElement;
 public class PO_SignupView extends PO_NavView {
 
 	/**
-	 * Espera a que se cargue el formulario y lo rellena
+	 * Nos lleva al formulario de registro
+	 * 
+	 * @param driver: apuntando al navegador abierto actualmente
+	 */
+	public static void goToSignup(WebDriver driver) {
+		PO_HomeView.clickLinkAndCheckElement(driver, "aSignup", "id", "buttonSubmit");
+	}
+	
+	/**
+	 * Espera a que se cargue el formulario de registro y lo rellena con los datos indicados
+	 * 
+	 * @param driver: apuntando al navegador abierto actualmente
+	 * @param emailp: valor a introducir en el campo email
+	 * @param namep: valor a introducir en el campo name
+	 * @param lastnamep: valor a introducir en el campo lastName
+	 * @param passwordp: valor a introducir en el campo password
+	 * @param passwordconfp: valor a introducir en el campo passwordConfirm
 	 */
 	static public void fillForm(WebDriver driver, String emailp, String namep, 
 			String lastnamep, String passwordp, String passwordconfp) {
@@ -46,17 +62,6 @@ public class PO_SignupView extends PO_NavView {
 	}
 	
 	/**
-	 * Espera a que se cargue el formulario, lo rellena 
-	 * y comprueba que se produce el error indicado en el idioma indicado
-	 */
-	public static void fillFormAndCheckErrorKey(WebDriver driver, String emailp, String namep, 
-			String lastnamep, String passwordp, String passwordconfp, String errorKey, int language) {
-		 
-		PO_SignupView.fillForm(driver, emailp, namep, lastnamep, passwordp, passwordconfp);
-		PO_SignupView.checkKey(driver, errorKey, language);
-	}
-	
-	/**
 	 * Espera a que se cargue el formulario, lo rellena y comprueba que se autologea correctamente
 	 */
 	public static void fillFormAndCheckWasOk(WebDriver driver, String emailp, String namep, 
@@ -65,12 +70,19 @@ public class PO_SignupView extends PO_NavView {
 		PO_SignupView.fillForm(driver, emailp, namep, lastnamep, passwordp, passwordconfp);
 		PO_View.checkElement(driver, "text", "Usuario autenticado: " + emailp);
 	}
-
+	
 	/**
-	 * Nos lleva al formulario de registro
+	 * Espera a que se cargue el formulario, lo rellena 
+	 * y comprueba que se produce el error indicado en el idioma indicado
+	 * 
+	 * @param errorKey: clave del error en el fichero de propiedades
+	 * @param language: idioma en el que se va a mostrar el error
 	 */
-	public static void goToSignup(WebDriver driver) {
-		PO_HomeView.clickLinkAndCheckElement(driver, "aSignup", "id", "buttonSubmit");
+	public static void fillFormAndCheckErrorKey(WebDriver driver, String emailp, String namep, 
+			String lastnamep, String passwordp, String passwordconfp, String errorKey, int language) {
+		 
+		PO_SignupView.fillForm(driver, emailp, namep, lastnamep, passwordp, passwordconfp);
+		PO_SignupView.checkKey(driver, errorKey, language);
 	}
 
 }
