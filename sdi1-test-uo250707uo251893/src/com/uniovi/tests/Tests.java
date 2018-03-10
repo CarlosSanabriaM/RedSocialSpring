@@ -2,6 +2,7 @@ package com.uniovi.tests;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -16,7 +17,6 @@ import com.uniovi.tests.pageobjects.PO_PrivateView;
 import com.uniovi.tests.pageobjects.PO_Properties;
 import com.uniovi.tests.pageobjects.PO_SignupView;
 import com.uniovi.tests.pageobjects.PO_View;
-import com.uniovi.tests.util.SeleniumUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class Tests {
@@ -40,6 +40,8 @@ public class Tests {
 	
 	private static String user1Email = "user1@gmail.com";
 	private static String user1Password = "1234";
+	private static String user2Email = "user2@gmail.com";
+	private static String user2Password = "1234";
 	
 	/**
 	 * Antes de cada prueba se navega al URL home de la aplicaciónn
@@ -178,6 +180,50 @@ public class Tests {
 	}
 	
 	/**
+	 * 5.1 [InvVal] Enviar una invitación de amistad a un usuario de forma valida.
+	 */
+	@Test
+	public void PR09() {
+		Assert.fail("SIN IMPLEMENTAR");
+	}
+	
+	/**
+	 * 5.2 [InvInVal] Enviar una invitación de amistad a un usuario al que ya le habíamos 
+	 * invitado la invitación previamente. No debería dejarnos enviar la invitación, 
+	 * se podría ocultar el botón de enviar invitación o notificar que ya había sido enviada previamente.
+	 */
+	@Test
+	public void PR10() {
+		Assert.fail("SIN IMPLEMENTAR");
+	}
+	
+	/**
+	 * 6.1 [LisInvVal] Listar las invitaciones recibidas por un usuario, realizar 
+	 * la comprobación con una lista que al menos tenga una invitación recibida.
+	 */
+	@Test
+	public void PR11() {
+		Assert.fail("SIN IMPLEMENTAR");
+	}
+	
+	/**
+	 * 7.1 [AcepInvVal] Aceptar una invitación recibida.
+	 */
+	@Test
+	public void PR12() {
+		Assert.fail("SIN IMPLEMENTAR");
+	}
+	
+	/**
+	 * 8.1 [ListAmiVal] Listar los amigos de un usuario, realizar la 
+	 * comprobación con una lista que al menos tenga un amigo.
+	 */
+	@Test
+	public void PR13() {
+		Assert.fail("SIN IMPLEMENTAR");
+	}
+	
+	/**
 	 * 9.1 [PubVal] Crear una publicación con datos válidos. 
 	 */
 	@Test
@@ -206,15 +252,16 @@ public class Tests {
 	public void PR15() {
 		// Iniciamos sesión, pinchamos en "Publicaciones" -> "Ver mis Publicaciones" 
 		// en el menú de navegación y comprobamos que aparece el texto "Mis publicaciones"
-		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user2Email, user2Password);
 		PO_PrivateView.clickLinkAndCheckElement(driver, "aDropdownPostsMenu", "id", "aPostList");
 		PO_PrivateView.clickLinkAndCheckElement(driver, "aPostList", "text", "Mis publicaciones");
 		
-		// Comprobamos tambien que el usuario user1 tiene 5 publicaciones (tenia 4 y creamos una nueva)
-		PO_PrivateView.checkNumPosts(driver, 5);
+		// Comprobamos tambien que el usuario user2 tiene 4 publicaciones
+		PO_PrivateView.checkNumPosts(driver, 4);
 		
 		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
+	
 	/**
 	 * 11.1 [LisPubAmiVal] Listar las publicaciones de un usuario amigo 
 	 */
@@ -222,13 +269,101 @@ public class Tests {
 	public void PR16() {
 		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
 		
-		
+		Assert.fail("SIN IMPLEMENTAR");
 		
 		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
 
+	/**
+	 * 11.2 [LisPubAmiInVal] Utilizando un acceso vía URL tratar de listar 
+	 * las publicaciones de un usuario que no sea amigo del usuario identificado en sesión.
+	 */
+	@Test
+	public void PR17() {
+		Assert.fail("SIN IMPLEMENTAR");
+	}	
 	
-/*	
+	/**
+	 * 12.1 [PubFot1Val] Crear una publicación con datos válidos y una foto adjunta.
+	 */
+	@Test
+	public void PR18() {
+		Assert.fail("SIN IMPLEMENTAR");
+	}
+	
+	/**
+	 * 12.1 [PubFot2Val] Crear una publicación con datos válidos y sin una foto adjunta.
+	 */
+	@Test
+	public void PR19() {
+		Assert.fail("SIN IMPLEMENTAR");
+	}
+	
+	/**
+	 * 13.1 [AdInVal] Inicio de sesión como administrador con datos válidos. 
+	 */
+	@Test
+	public void PR20() {
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		
+		
+		
+		PO_PrivateView.logoutAndCheckWasOk(driver);
+	}
+	
+	/**
+	 * 13.2 [AdInInVal] Inicio de sesión como administrador con datos inválidos 
+	 * (usar los datos de un usuario que no tenga perfil administrador).
+	 */
+	@Test
+	public void PR21() {
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		
+		
+		
+		PO_PrivateView.logoutAndCheckWasOk(driver);
+	}
+	
+	/**
+	 * 14.1 [AdLisUsrVal] Desde un usuario identificado en sesión como 
+	 * administrador listar a todos los usuarios de la aplicación. 
+	 */
+	@Test
+	public void PR22() {
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		
+		
+		
+		PO_PrivateView.logoutAndCheckWasOk(driver);
+	}
+	
+	/**
+	 * 15.1 [AdBorUsrVal] Desde un usuario identificado en sesión como 
+	 * administrador eliminar un usuario existente en la aplicación.  
+	 */
+	@Test
+	public void PR23() {
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		
+		
+		
+		PO_PrivateView.logoutAndCheckWasOk(driver);
+	}
+	
+	/**
+	 * 15.2 [AdBorUsrInVal] Intento de acceso vía URL al borrado de un usuario existente en la aplicación. 
+	 * Debe utilizarse un usuario identificado en sesión pero que no tenga perfil de administrador. 
+	 */
+	@Test
+	public void PR24() {
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		
+		
+		
+		PO_PrivateView.logoutAndCheckWasOk(driver);
+	}
+	
+/*	TODO - quitar
 	//PR01. Acceder a la página principal /
 	@Test
 	public void PR01() {

@@ -11,23 +11,13 @@
 	
 		<h2 th:text="#{Title.post.list}">Mis publicaciones</h2>
 
-		<div class="table-responsive">
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th th:text="#{post.title}">Título</th>
-						<th th:text="#{post.date}">Fecha</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="post : ${postsList}">
-						<td th:text="${post.title}">Título de la publicación</td>
-						<td th:text="${#dates.format(post.date, 'dd/MM/yyyy HH:mm')}">
-							Fecha de la publicación
-						</td>
-					</tr>
-				</tbody>
-			</table>
+		<div class="panel panel-default" th:each="post : ${postsList}">
+			<div class="panel-heading" th:text="${post.title}">
+				Título de la publicación>
+			</div>
+			<div class="panel-body" th:text="${#dates.format(post.date, 'dd/MM/yyyy HH:mm')}">
+				Fecha de la publicación
+			</div>
 		</div>
 		
 	</div>

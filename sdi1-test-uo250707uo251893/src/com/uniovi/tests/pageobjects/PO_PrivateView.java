@@ -44,7 +44,12 @@ public class PO_PrivateView extends PO_NavView {
 		driver.findElement(boton).click();
 	}
 	
-	public static void checkNumUsers(WebDriver driver, int numUsers) {// TODO . modificar!!
+	/**
+	 * Comprueba que el numero de usuarios en la vista actual coincida con el indicado
+	 * @param driver
+	 * @param numUsers
+	 */
+	public static void checkNumUsers(WebDriver driver, int numUsers) {
 		List<WebElement> elementos = checkElement(driver, "free", "//tbody/tr");
 		assertTrue(elementos.size() == numUsers);
 	}
@@ -108,6 +113,17 @@ public class PO_PrivateView extends PO_NavView {
 		// Pulsamos el boton de enviar para realizar la búsqueda
 		By boton = By.id("buttonSearchText");
 		driver.findElement(boton).click();
+	}
+
+	/**
+	 * Comprueba que el numero de posts en la vista actual coincida con el indicado
+	 * @param driver
+	 * @param numPosts
+	 */
+	public static void checkNumPosts(WebDriver driver, int numPosts) {
+		// Cada post está dentro de un div con class="panel panel-default"
+		List<WebElement> elementos = checkElement(driver, "class", "panel panel-default");
+		assertTrue(elementos.size() == numPosts);
 	}
 
 }
