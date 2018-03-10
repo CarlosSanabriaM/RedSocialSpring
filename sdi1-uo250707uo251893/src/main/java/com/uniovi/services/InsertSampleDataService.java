@@ -25,6 +25,7 @@ public class InsertSampleDataService {
 	@Autowired
 	private UsersRepository usersRepository;
 
+	@SuppressWarnings("serial")
 	@PostConstruct
 	public void init() {
 		
@@ -95,7 +96,7 @@ public class InsertSampleDataService {
 		user16.setRole(rolesService.getRoles()[0]);
 		
 		
-		Set user1Posts = new HashSet<Post>() {
+		Set<Post> user1Posts = new HashSet<Post>() {
 			{
 				add(new Post("Titulo A1", "Texto A1", new Date(1505777200000L), user1));
 				add(new Post("Titulo A2", "Texto A2", new Date(1505133200000L), user1));
@@ -105,7 +106,7 @@ public class InsertSampleDataService {
 		};
 		user1.setPosts(user1Posts);
 		
-		Set user2Posts = new HashSet<Post>() {
+		Set<Post> user2Posts = new HashSet<Post>() {
 			{
 				add(new Post("Titulo B1", "Texto B1", new Date(1505167200000L), user2));
 				add(new Post("Titulo B2", "Texto B2", new Date(1333167207420L), user2));
@@ -115,7 +116,7 @@ public class InsertSampleDataService {
 		};
 		user2.setPosts(user2Posts);
 		
-		Set user3Posts = new HashSet<Post>() {
+		Set<Post> user3Posts = new HashSet<Post>() {
 			{
 				add(new Post("Titulo C1", "Texto C1", new Date(1504167200000L), user3));
 				add(new Post("Titulo C2", "Texto C2", new Date(1325167207420L), user3));
@@ -125,7 +126,7 @@ public class InsertSampleDataService {
 		};
 		user3.setPosts(user3Posts);
 		
-		Set user4Posts = new HashSet<Post>() {
+		Set<Post> user4Posts = new HashSet<Post>() {
 			{
 				add(new Post("Titulo D1", "Texto D1", new Date(1504199200000L), user4));
 				add(new Post("Titulo D2", "Texto D2", new Date(1525177207420L), user4));

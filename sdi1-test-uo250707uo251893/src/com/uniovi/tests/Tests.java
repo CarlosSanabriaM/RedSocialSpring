@@ -304,10 +304,7 @@ public class Tests {
 	 */
 	@Test
 	public void PR20() {
-		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
-		
-		
-		
+		PO_AdminLoginView.goToAdminLoginFillFormAndCheckWasOk(driver, adminEmail, adminPassword);
 		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
 	
@@ -317,11 +314,8 @@ public class Tests {
 	 */
 	@Test
 	public void PR21() {
-		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
-		
-		
-		
-		PO_PrivateView.logoutAndCheckWasOk(driver);
+		PO_AdminLoginView.goToAdminLoginFillFormAndCheckWasWrong(
+				driver, user1Email, user1Password, "Error.admin.login.role" ,PO_Properties.getSPANISH());
 	}
 	
 	/**
@@ -330,9 +324,10 @@ public class Tests {
 	 */
 	@Test
 	public void PR22() {
-		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		PO_AdminLoginView.goToAdminLoginFillFormAndCheckWasOk(driver, adminEmail, adminPassword);
 		
-		
+		PO_PrivateView.clickLinkAndCheckElement(driver, "aDropdownUsersMenu", "id", "aUserList");
+		PO_PrivateView.clickLinkAndCheckElement(driver, "aUserList", "text", "Todos los usuarios");
 		
 		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
@@ -343,9 +338,10 @@ public class Tests {
 	 */
 	@Test
 	public void PR23() {
-		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		PO_AdminLoginView.goToAdminLoginFillFormAndCheckWasOk(driver, adminEmail, adminPassword);
 		
-		
+		// Eliminamos al user1 y comprobamos que ya no aparece
+		PO_PrivateView.deleteUserAndCheckWasOk(driver, user1Email);
 		
 		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}

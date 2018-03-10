@@ -13,29 +13,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SeleniumUtils {
 
-	
-	/**
-	 * Aborta si el "texto" no está presente en la página actual
-	 * @param driver: apuntando al navegador abierto actualmente.
-	 * @param texto: texto a buscar
-	 */
-	static public void textoPresentePagina(WebDriver driver, String texto)
-	{
-		List<WebElement> list = driver.findElements(By.xpath("//*[contains(normalize-space(text()),'" + texto + "')]"));		
-		assertTrue("Texto " + texto + " no localizado!", list.size() > 0);			
-	}
-
-	/**
-	 * Aborta si el "texto" está presente en la página actual
-	 * @param driver: apuntando al navegador abierto actualmente.
-	 * @param texto: texto a buscar
-	 */
-	static public void textoNoPresentePagina(WebDriver driver, String texto)
-	{
-		List<WebElement> list = driver.findElements(By.xpath("//*[contains(normalize-space(text()),'" + texto + "')]"));		
-		assertTrue("Texto " + texto + " aun presente !", list.size() == 0);			
-	}
-
 	/**
 	 * Aborta si el "texto" está presente en la página actual tras timeout segundos.
 	 * @param driver: apuntando al navegador abierto actualmente.

@@ -8,6 +8,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.uniovi.tests.util.SeleniumUtils;
+
 public class PO_PrivateView extends PO_NavView {
 	
 	/**
@@ -89,10 +91,30 @@ public class PO_PrivateView extends PO_NavView {
 //		elementos.get(page).click();
 //	}
 
-	public static void deleteMark(WebDriver driver, String markDescription) {// TODO - modificar
+	/**
+	 * Pulsa el botón de eliminar del usuario con el email indicado, siempre que 
+	 * se esté en la vista que tiene la lista de usuarios para el administrador y 
+	 * dicho email aparezca en la página actual
+	 * @param driver
+	 * @param userEmail: email del usuario a eliminar
+	 */
+	public static void deleteUser(WebDriver driver, String userEmail) {
+		// Buscamos una celda que contenga el email indicado. 
+		// La celda siguiente de la misma fila contendrá el botón de eliminar, así que lo clickamos.
 		List<WebElement> elementos = checkElement(driver, "free",
-				"//td[contains(text(), '"+ markDescription +"')]/following-sibling::*/a[contains(@href, 'mark/delete')]");
+				"//td[contains(text(), '"+ userEmail +"')]/following-sibling::td/div/button");
 		elementos.get(0).click();
+	}
+	
+	/**
+	 * Elimina el usuario con el email indicado, y comprueba que ya no aparece
+	 * su email en la vista actual (que se ha eliminado correctamente)
+	 * @param driver
+	 * @param userEmail: email del usuario a eliminar
+	 */
+	public static void deleteUserAndCheckWasOk(WebDriver driver, String userEmail) {
+		deleteUser(driver, userEmail);
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userEmail, getTimeout());
 	}
 
 	/**
