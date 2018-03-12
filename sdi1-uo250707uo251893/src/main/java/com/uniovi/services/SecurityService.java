@@ -47,7 +47,7 @@ public class SecurityService {
 		}
 	}
 	
-	public void logoutUserInSession() {
+	public void logoutUserInSession() { //TODO - revisar
 		SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
 		SecurityContextHolder.clearContext();
 	}

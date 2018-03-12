@@ -21,8 +21,6 @@ public class Post {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 	
-	//private Image photo; //XXX - No funciona con JPA
-	
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;

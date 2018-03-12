@@ -92,7 +92,7 @@ public class UsersController {
 		return "admin/login";
 	}
 	
-	//TODO . metodo demasiado grande, quizas haya que sacar algo a un Service, o no??
+	//TODO . metodo demasiado grande, quizas haya que sacar algo a un Service, o encapsularlo en metodos
 	@RequestMapping("/user/list")
 	public String getListado(Model model, Pageable pageable, Principal principal,
 			@RequestParam(value="", required=false) String searchText) {
