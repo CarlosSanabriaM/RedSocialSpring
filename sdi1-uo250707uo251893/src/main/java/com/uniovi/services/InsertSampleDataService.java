@@ -1,7 +1,9 @@
 package com.uniovi.services;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -9,8 +11,10 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.uniovi.entities.Invitation;
 import com.uniovi.entities.Post;
 import com.uniovi.entities.User;
+import com.uniovi.repositories.InvitationRepository;
 import com.uniovi.repositories.UsersRepository;
 
 @Service
@@ -24,6 +28,9 @@ public class InsertSampleDataService {
 	
 	@Autowired
 	private UsersRepository usersRepository;
+	
+	@Autowired
+	private InvitationRepository invitationRepository;
 
 	@SuppressWarnings("serial")
 	@PostConstruct
@@ -134,7 +141,23 @@ public class InsertSampleDataService {
 				add(new Post("Titulo D4", "Texto D4", new Date(1507133200656L), user4));
 			}
 		};
-		user4.setPosts(user4Posts);
+		user4.setPosts(user4Posts);		
+		
+		user1.getFriends().add(user4);
+		user1.getAuxFriends().add(user4);
+		user4.getFriends().add(user1);
+		user4.getAuxFriends().add(user1);
+		
+		user1.getFriends().add(user5);
+		user1.getAuxFriends().add(user5);
+		user5.getFriends().add(user1);
+		user5.getAuxFriends().add(user1);
+		
+		user1.getFriends().add(user6);
+		user1.getAuxFriends().add(user6);
+		user6.getFriends().add(user1);
+		user6.getAuxFriends().add(user1);
+		
 		
 		usersService.addUser(user1);
 		usersService.addUser(user2);
@@ -152,6 +175,20 @@ public class InsertSampleDataService {
 		usersService.addUser(user14);
 		usersService.addUser(user15);
 		usersService.addUser(user16);
+		
+		List<Invitation> invitaciones = new ArrayList<Invitation>() {
+			{
+				add(new Invitation(user1,user2));
+				add(new Invitation(user1,user3));
+				add(new Invitation(user7,user1));
+				add(new Invitation(user8,user1));
+				add(new Invitation(user9,user1));
+				add(new Invitation(user10,user1));
+			}
+		};
+		
+		invitationRepository.save(invitaciones);
+		
 		
 		// Administradores
 		

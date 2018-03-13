@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.uniovi.entities.User;
 import com.uniovi.repositories.UsersRepository;
 
@@ -22,6 +21,8 @@ public class UsersService {
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	
 
 	@PostConstruct
 	public void init() {}
@@ -67,5 +68,10 @@ public class UsersService {
 		searchText = "%" + searchText + "%"; // Comodines para el SQL
 		return usersRepository.searchByEmailAndNameByRole(pageable, searchText, "ROLE_PUBLIC");
 	}
+
+	public Page<User> getFriends(Pageable pageable, String email) {
+		return usersRepository.getFriendsOf(pageable, email);
+	}	
+	
 	
 }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+
+<body>
+	
+	<!-- Barra de Navegación superior -->
+	<nav th:replace="fragments/nav" />
+	
+	<div class="container">
+		
+		<h2 th:text="#{Title.user.invitations}">Peticiones</h2>
+		
+		<div th:fragment="tableInvitationsAndPagination" id="tableInvitationsAndPagination">
+		
+			<div class="table-responsive">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th th:text="#{user.name}">Nombre</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="invitation : ${invitationsList}">
+							<td th:text="${invitation.sender.name + ' ' + invitation.sender.lastName}">Nombre completo del usuario</td>
+							<td> <a th:href="'/user/accept/' + ${invitation.id}" th:text="#{User.acceptInvitation}">Aceptar</a> </td>
+	
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			<footer th:replace="fragments/pagination" />
+			
+		</div>
+		
+	</div>
+	
+	<footer th:replace="fragments/footer" />
+	
+</body>
+</html>

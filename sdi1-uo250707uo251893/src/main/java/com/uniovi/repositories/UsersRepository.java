@@ -13,6 +13,8 @@ public interface UsersRepository extends CrudRepository<User, Long> {
 
 	User findByEmail(String email);
 	
+	Page<User> findAll(Pageable pageable); 
+	
 	List<User> findAllByRole(String role);
 	
 	@Query("SELECT u FROM User u WHERE u.role = ?1")
@@ -23,5 +25,8 @@ public interface UsersRepository extends CrudRepository<User, Long> {
 	Page<User> searchByEmailAndNameByRole(Pageable pageable, String seachtext, String role);
 
 	void deleteAll();
+
+	@Query("SELECT u FROM User u JOIN u.friends f WHERE f.email = ?1")
+	Page<User> getFriendsOf(Pageable pageable, String email);
 	
 }

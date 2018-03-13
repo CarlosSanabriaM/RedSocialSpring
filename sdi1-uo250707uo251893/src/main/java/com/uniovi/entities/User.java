@@ -1,5 +1,6 @@
 package com.uniovi.entities;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -15,20 +16,28 @@ public class User {
 	private String name;
 	private String lastName;
 	private String password;
-	
+
 	@Transient
 	private String passwordConfirm;
 	private String role;
-	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private Set<Post> posts;
 
-	@Transient
-	private Set<User> friends;//TODO - Corregir
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<Post> posts = new HashSet<Post>();
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name="friends",
+			joinColumns= {@JoinColumn(name="friend_id")},
+			inverseJoinColumns = {@JoinColumn(name="aux_friend_id")})
+	private Set<User> friends = new HashSet<User>();
 	
-	@Transient
-	private Set<User> invitations;
-	
+	@ManyToMany(mappedBy="friends")
+	private Set<User> auxFriends = new HashSet<User>();
+
+	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+	private Set<Invitation> receivedInvitations = new HashSet<Invitation>();
+	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+	private Set<Invitation> sendedInvitations = new HashSet<Invitation>();
+
 	public User(String email, String name, String lastName) {
 		this.email = email;
 		this.name = name;
@@ -62,7 +71,6 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	
 	public String getEmail() {
 		return email;
 	}
@@ -115,12 +123,36 @@ public class User {
 		this.friends = friends;
 	}
 
-	public Set<User> getInvitations() {
-		return invitations;
+	public Set<Invitation> getReceivedInvitations() {
+		return receivedInvitations;
 	}
 
-	public void setInvitations(Set<User> invitations) {
-		this.invitations = invitations;
+	public void setReceivedInvitations(Set<Invitation> receivedInvitations) {
+		this.receivedInvitations = receivedInvitations;
+	}
+
+	public Set<Invitation> getSendInvitations() {
+		return sendedInvitations;
+	}
+
+	public void setSendInvitations(Set<Invitation> sendInvitations) {
+		this.sendedInvitations = sendInvitations;
+	}
+
+	public Set<User> getAuxFriends() {
+		return auxFriends;
+	}
+
+	public void setAuxFriends(Set<User> auxFriends) {
+		this.auxFriends = auxFriends;
+	}
+
+	public Set<Invitation> getSendedInvitations() {
+		return sendedInvitations;
+	}
+
+	public void setSendedInvitations(Set<Invitation> sendedInvitations) {
+		this.sendedInvitations = sendedInvitations;
 	}
 
 	@Override
@@ -128,5 +160,32 @@ public class User {
 		return "User [id=" + id + ", email=" + email + ", name=" + name + ", lastName=" + lastName + ", role=" + role
 				+ "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		return true;
+	}
 	
+	
+
 }

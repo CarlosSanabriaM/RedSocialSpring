@@ -169,4 +169,14 @@ public class UsersController {
 		return "admin/restarted";
 	}
 	
+	@RequestMapping("/user/friends")
+	public String getFriends(Pageable pageable, Principal principal, Model model) {
+		Page<User> users = usersService.getFriends(pageable, principal.getName());
+		
+		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("page", users);
+		
+		return "/user/friends";
+	}
+	
 }

@@ -39,6 +39,7 @@
 						<tr>
 							<th th:text="#{user.name}">Nombre</th>
 							<th th:text="#{user.email}">Email</th>
+							<th sec:authorize="hasRole('ROLE_PUBLIC')" class="col-md-1"></th>
 							<th sec:authorize="hasRole('ROLE_ADMIN')" class="col-md-1"></th>
 						</tr>
 					</thead>
@@ -46,6 +47,7 @@
 						<tr th:each="user : ${usersList}">
 							<td th:text="${user.name + ' ' + user.lastName}">Nombre completo del usuario</td>
 							<td th:text="${user.email}">Email del usuario</td>
+							<td sec:authorize="hasRole('ROLE_PUBLIC')"> <a th:href="'/user/invitate/' + ${user.id}" th:text="#{User.sendInvitation}">Invitacion</a> </td>
 							 
 							<td sec:authorize="hasRole('ROLE_ADMIN')">
 								<div>
