@@ -120,6 +120,8 @@ public class UsersController {
 		// Si accede desde un login, es que acaba de iniciar sesión
 		if(urlLogin!= null) {
 			loggerService.userHasLoggedInFrom(email, urlLogin);
+			// Eliminamos el atributo de la sesión, ya que cuando acceda a /user/list
+			// de nuevo, ya no va a venir de ningún formulario de login
 			httpSession.removeAttribute("login");
 		}
 		
