@@ -63,7 +63,7 @@ public class UsersController {
 			return "signup";
 		}
 		
-		user.setRole(rolesService.getRoles()[0]); // Los usuarios registrados desde signup tienen role public TODO - cambiar!, debe ser una entidad
+		user.setRole(rolesService.getRoles()[0]); // Los usuarios registrados desde signup tienen role public
 		usersService.addUser(user);
 		
 		loggerService.newUserHasSignedUp(user.getEmail());//TODO - Dejar aqui o meter dentor del addUser del Service?? es que addUser puede ser llamado desde otro sitio en una aplicacion real, no solo desde el signup
@@ -92,7 +92,6 @@ public class UsersController {
 		return "admin/login";
 	}
 	
-	//TODO . metodo demasiado grande, quizas haya que sacar algo a un Service, o encapsularlo en metodos
 	@RequestMapping("/user/list")
 	public String getListado(Model model, Pageable pageable, Principal principal,
 			@RequestParam(value="", required=false) String searchText) {

@@ -16,7 +16,13 @@ public class PO_Properties {
 
     public String getString(String prop, int locale) {	
 		ResourceBundle bundle = ResourceBundle.getBundle(Path, idioms[locale]);
-		return bundle.getString(prop);
+		String s = bundle.getString(prop);
+		try {
+			s = new String(s.getBytes("ISO-8859-1"), "UTF-8");
+		}catch (Exception e) {
+			System.err.println("Error al convertir de ISO-8859-1 a UTF-8");
+		}
+		return s;
 	}
     
     public static int getSPANISH() {

@@ -3,7 +3,7 @@ package com.uniovi.services;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RolesService {//TODO - Quizas haya que hacer una entidad Role y relacionarla con User (lo pone el pdf de la sesion 4)
+public class RolesService {
 	
 	String[] roles = { "ROLE_PUBLIC", "ROLE_ADMIN" };
 

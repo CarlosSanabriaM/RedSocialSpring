@@ -357,7 +357,7 @@ public class Tests {
 	public void PR24() {
 		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
 		
-		driver.navigate().to("http://localhost:8090/user/delete/" + 20); //XXX - Como saco el id de un usuario que exista si el id cambia cada vez que se reinica la BD??? No falla porque exista o no el usuario con ese id, nos lleva a /error
+		driver.navigate().to("http://localhost:8090/user/delete/2");
 		PO_View.checkElement(driver, "text", "¡Se ha producido un error!");
 		PO_PrivateView.clickLinkAndCheckElement(driver, "aIndex", "text", "¡Bienvenidos a Red Social!");
 		
