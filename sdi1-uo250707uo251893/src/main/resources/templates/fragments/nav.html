@@ -17,7 +17,7 @@
 			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
 				<li><a id="aHome" href="/" th:text="#{Nav.home}">Home</a></li>
 				
-				<li id= "users-menu" class="dropdown" sec:authorize="isAuthenticated()">
+				<li id= "users-menu" class="dropdown">
  					<a id="aDropdownUsersMenu" class="dropdown-toggle" data-toggle="dropdown" 
  						href="#" th:text="#{Nav.users}">
  						Usuarios <span class="caret"></span>
