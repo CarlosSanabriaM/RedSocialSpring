@@ -13,6 +13,8 @@ public interface UsersRepository extends CrudRepository<User, Long> {
 
 	User findByEmail(String email);
 	
+	Page<User> findAll(Pageable pageable); 
+	
 	List<User> findAllByRole(String role);
 	
 	@Query("SELECT u FROM User u WHERE u.role = ?1")

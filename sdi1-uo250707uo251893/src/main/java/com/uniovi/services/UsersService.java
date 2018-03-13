@@ -10,8 +10,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.uniovi.entities.Invitation;
 import com.uniovi.entities.User;
+import com.uniovi.repositories.InvitationRepository;
 import com.uniovi.repositories.UsersRepository;
 
 @Service
@@ -22,6 +25,9 @@ public class UsersService {
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Autowired
+	private InvitationRepository invitationRepository;
 
 	@PostConstruct
 	public void init() {}
@@ -67,5 +73,19 @@ public class UsersService {
 		searchText = "%" + searchText + "%"; // Comodines para el SQL
 		return usersRepository.searchByEmailAndNameByRole(pageable, searchText, "ROLE_PUBLIC");
 	}
+	
+	@Transactional
+	public void sendInvitation(String sender_email, Long receiver_id) {
+		User receiver = usersRepository.findOne(receiver_id);
+		User sender = usersRepository.findByEmail(sender_email);
+		if(receiver != null && sender != null && receiver!=sender) {
+			invitationRepository.save(new Invitation(sender, receiver));
+			
+//			usersRepository.save(receiver);
+//			usersRepository.save(sender);
+		}
+	}
+	
+	
 	
 }

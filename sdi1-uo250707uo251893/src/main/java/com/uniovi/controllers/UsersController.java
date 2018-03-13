@@ -168,4 +168,11 @@ public class UsersController {
 		return "admin/restarted";
 	}
 	
+	@RequestMapping("user/invitate/{id}")
+	public String invitateUser(@PathVariable Long id, Principal principal) {
+		usersService.sendInvitation(principal.getName(), id);		
+		
+		return "redirect:/user/list";
+	}
+	
 }

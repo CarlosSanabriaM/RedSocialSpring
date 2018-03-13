@@ -15,20 +15,22 @@ public class User {
 	private String name;
 	private String lastName;
 	private String password;
-	
+
 	@Transient
 	private String passwordConfirm;
 	private String role;
-	
+
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Post> posts;
 
 	@Transient
-	private Set<User> friends;//TODO - Corregir
-	
-	@Transient
-	private Set<User> invitations;
-	
+	private Set<User> friends;// TODO - Corregir
+
+	@ManyToOne
+	private Set<Invitation> receivedInvitations;
+	@ManyToOne
+	private Set<Invitation> sendedInvitations;
+
 	public User(String email, String name, String lastName) {
 		this.email = email;
 		this.name = name;
@@ -62,7 +64,6 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	
 	public String getEmail() {
 		return email;
 	}
@@ -115,12 +116,20 @@ public class User {
 		this.friends = friends;
 	}
 
-	public Set<User> getInvitations() {
-		return invitations;
+	public Set<Invitation> getReceivedInvitations() {
+		return receivedInvitations;
 	}
 
-	public void setInvitations(Set<User> invitations) {
-		this.invitations = invitations;
+	public void setReceivedInvitations(Set<Invitation> receivedInvitations) {
+		this.receivedInvitations = receivedInvitations;
+	}
+
+	public Set<Invitation> getSendInvitations() {
+		return sendedInvitations;
+	}
+
+	public void setSendInvitations(Set<Invitation> sendInvitations) {
+		this.sendedInvitations = sendInvitations;
 	}
 
 	@Override
@@ -128,5 +137,32 @@ public class User {
 		return "User [id=" + id + ", email=" + email + ", name=" + name + ", lastName=" + lastName + ", role=" + role
 				+ "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		return true;
+	}
 	
+	
+
 }
