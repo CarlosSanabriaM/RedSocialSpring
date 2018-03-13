@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+
+<body>
+	
+	<!-- Barra de Navegación superior -->
+	<nav th:replace="fragments/nav" />
+	
+	<div class="container">
+		
+		<h2 th:text="#{Title.user.friends}">Amigos</h2>
+		
+		<div th:fragment="tableUsersAndPagination" id="tableUsersAndPagination">
+		
+			<div class="table-responsive">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th th:text="#{user.name}">Nombre</th>
+							<th th:text="#{user.email}">Email</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="user : ${usersList}">
+						
+							<td th:text="${user.name + ' ' + user.lastName}">Nombre completo del usuario</td>
+							<td th:text="${user.email}">Email del usuario</td>
+	
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			<footer th:replace="fragments/pagination" />
+			
+		</div>
+		
+	</div>
+	
+	<footer th:replace="fragments/footer" />
+	
+</body>
+</html>

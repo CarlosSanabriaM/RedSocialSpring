@@ -28,10 +28,10 @@
  							<a id="aUserList" href="/user/list" th:text="#{Nav.users.see.all}">Ver Todos</a>
  						</li>
  						<li sec:authorize="hasRole('ROLE_PUBLIC')">
- 							<a id="aUserFriendList" href="/user/friend/list" th:text="#{Nav.users.see.friends}">Ver Amigos</a>
+ 							<a id="aUserFriendList" href="/user/friends" th:text="#{Nav.users.see.friends}">Ver Amigos</a>
  						</li>
  						<li sec:authorize="hasRole('ROLE_PUBLIC')">
- 							<a id="aUserFriendRequestList" href="/user/friend/request/list" 
+ 							<a id="aUserFriendRequestList" href="/user/invitations" 
  								th:text="#{Nav.users.see.friendRequests}">Ver Solicitudes de Amistad</a>
  						</li>
  					</ul>

@@ -168,11 +168,14 @@ public class UsersController {
 		return "admin/restarted";
 	}
 	
-	@RequestMapping("user/invitate/{id}")
-	public String invitateUser(@PathVariable Long id, Principal principal) {
-		usersService.sendInvitation(principal.getName(), id);		
+	@RequestMapping("/user/friends")
+	public String getFriends(Pageable pageable, Principal principal, Model model) {
+		Page<User> users = usersService.getFriends(pageable, principal.getName());
 		
-		return "redirect:/user/list";
+		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("page", users);
+		
+		return "/user/friends";
 	}
 	
 }

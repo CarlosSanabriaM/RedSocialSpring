@@ -1,5 +1,6 @@
 package com.uniovi.entities;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -21,15 +22,21 @@ public class User {
 	private String role;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private Set<Post> posts;
+	private Set<Post> posts = new HashSet<Post>();
 
-	@Transient
-	private Set<User> friends;// TODO - Corregir
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name="friends",
+			joinColumns= {@JoinColumn(name="friend_id")},
+			inverseJoinColumns = {@JoinColumn(name="aux_friend_id")})
+	private Set<User> friends = new HashSet<User>();
+	
+	@ManyToMany(mappedBy="friends")
+	private Set<User> auxFriends = new HashSet<User>();
 
-	@ManyToOne
-	private Set<Invitation> receivedInvitations;
-	@ManyToOne
-	private Set<Invitation> sendedInvitations;
+	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+	private Set<Invitation> receivedInvitations = new HashSet<Invitation>();
+	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+	private Set<Invitation> sendedInvitations = new HashSet<Invitation>();
 
 	public User(String email, String name, String lastName) {
 		this.email = email;
@@ -130,6 +137,22 @@ public class User {
 
 	public void setSendInvitations(Set<Invitation> sendInvitations) {
 		this.sendedInvitations = sendInvitations;
+	}
+
+	public Set<User> getAuxFriends() {
+		return auxFriends;
+	}
+
+	public void setAuxFriends(Set<User> auxFriends) {
+		this.auxFriends = auxFriends;
+	}
+
+	public Set<Invitation> getSendedInvitations() {
+		return sendedInvitations;
+	}
+
+	public void setSendedInvitations(Set<Invitation> sendedInvitations) {
+		this.sendedInvitations = sendedInvitations;
 	}
 
 	@Override

@@ -1,15 +1,20 @@
 package com.uniovi.entities;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Invitation {
+	@Id
+	@GeneratedValue
+	private long id;
 	
-	@OneToMany(mappedBy = "receivedInvitations")
+	@ManyToOne
 	private User receiver;
 	
-	@OneToMany(mappedBy = "sendedInvitations")
+	@ManyToOne
 	private User sender;
 	
 	public Invitation() {
@@ -27,11 +32,13 @@ public class Invitation {
 	public void accept() {
 		sender.getFriends().add(receiver);
 		receiver.getFriends().add(sender);
+		sender.getAuxFriends().add(receiver);
+		receiver.getAuxFriends().add(sender);
 		
-		destroy();
+		//unlink(); 
 	}
 	
-	public void destroy() {
+	public void unlink() {
 		sender.getSendInvitations().remove(this);
 		receiver.getReceivedInvitations().remove(this);
 		
@@ -53,6 +60,14 @@ public class Invitation {
 
 	public void setSender(User sender) {
 		this.sender = sender;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	@Override
