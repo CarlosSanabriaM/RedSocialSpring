@@ -1,7 +1,5 @@
 package com.uniovi.services;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,9 +19,6 @@ public class SecurityService {
 	
 	@Autowired
 	private LoggerService loggerService;
-	
-	private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);//TODO-Dejar aqui o quitar y hacer un metodo en LoggerService
-																					  //Lo que pasa que perdemos el nombre de la clase en el Log.
 
 	public String findLoggedInDni() {
 		Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
@@ -42,12 +37,11 @@ public class SecurityService {
 	
 		if (aToken.isAuthenticated()) {
 			SecurityContextHolder.getContext().setAuthentication(aToken);
-			logger.debug(String.format("Auto login %s successfully!", email)); // TODO - quitar??
 			loggerService.userHasAutoLoggedIn(email);
 		}
 	}
 	
-	public void logoutUserInSession() { //TODO - revisar
+	public void logoutUserInSession() {
 		SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
 		SecurityContextHolder.clearContext();
 	}

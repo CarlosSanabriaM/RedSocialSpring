@@ -16,13 +16,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
 	private UsersRepository usersRepository;
+	
+	@Autowired
+	private LoggerService loggerService;
 
 	@Override
-	public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
-		User user = usersRepository.findByEmail(dni);
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		User user = usersRepository.findByEmail(email);
 		
 		if(user==null) {
-			System.out.println("USUARIO NO EXISTE"); // TODO - aqui meter log en lugar de este syso
+			loggerService.userNotExists(email);
 			throw new UsernameNotFoundException("User not found");
 		}
 		

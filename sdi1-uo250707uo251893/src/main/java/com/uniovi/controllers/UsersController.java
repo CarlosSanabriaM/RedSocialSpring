@@ -66,7 +66,7 @@ public class UsersController {
 		user.setRole(rolesService.getRoles()[0]); // Los usuarios registrados desde signup tienen role public
 		usersService.addUser(user);
 		
-		loggerService.newUserHasSignedUp(user.getEmail());//TODO - Dejar aqui o meter dentor del addUser del Service?? es que addUser puede ser llamado desde otro sitio en una aplicacion real, no solo desde el signup
+		loggerService.newUserHasSignedUp(user.getEmail());
 		
 		// Nada mas registrarse le hacemos que esté logeado
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());	

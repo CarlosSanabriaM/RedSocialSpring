@@ -68,7 +68,7 @@ public class LoggerService {
 				email, users.getNumber(), users.getSize(), emails);
 	}
 
-	public void userListUpdated(String email, Page<User> users) { //TODO - quizas sobra, ya que al darle a eliminar, se redirige a /list y luego a /list/update y salen dos mensajes seguidos parecidos.
+	public void userListUpdated(String email, Page<User> users) {
 		List<String> emails = new LinkedList<String>(); 
 		users.getContent().forEach( (x) -> emails.add(x.getEmail()) );
 		
@@ -104,6 +104,11 @@ public class LoggerService {
 	public void databaseRestarted(String email) {
 		log.info("El usuario con email '{}' ha reiniciado la base de datos. " + 
 				"Se han eliminado todos los usuarios y se han vuelto a insertar los usuarios de prueba.", 
+				email);
+	}
+
+	public void userNotExists(String email) {
+		log.info("El usuario con email '{}' no existe.", 
 				email);
 	}
 	
