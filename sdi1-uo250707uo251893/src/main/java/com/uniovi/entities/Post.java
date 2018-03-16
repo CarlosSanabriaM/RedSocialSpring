@@ -17,6 +17,7 @@ public class Post {
 	private long id;
 	private String title;
 	private String text;
+	private Boolean containsImage;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
@@ -72,6 +73,14 @@ public class Post {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public Boolean getContainsImage() {
+		return containsImage;
+	}
+
+	public void setContainsImage(Boolean containsImage) {
+		this.containsImage = containsImage;
 	}
 
 //	public Image getPhoto() {

@@ -34,8 +34,6 @@ public class Invitation {
 		receiver.getFriends().add(sender);
 		sender.getAuxFriends().add(receiver);
 		receiver.getAuxFriends().add(sender);
-		
-		//unlink(); 
 	}
 	
 	public void unlink() {

@@ -24,7 +24,7 @@
 					<tbody>
 						<tr th:each="user : ${usersList}">
 						
-							<td th:text="${user.name + ' ' + user.lastName}">Nombre completo del usuario</td>
+							<td> <a th:text="${user.name + ' ' + user.lastName}" th:href="${'/post/list/' + user.id}">Nombre completo del usuario</a></td>
 							<td th:text="${user.email}">Email del usuario</td>
 	
 						</tr>
