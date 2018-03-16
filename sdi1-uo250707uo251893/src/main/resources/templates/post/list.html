@@ -12,12 +12,19 @@
 		<h2 th:text="#{Title.post.list}">Mis publicaciones</h2>
 
 		<div class="panel panel-default" th:each="post : ${postsList}">
+		
 			<div class="panel-heading" th:text="${post.title}">
 				Título de la publicación>
 			</div>
+			
 			<div class="panel-body" th:text="${#dates.format(post.date, 'dd/MM/yyyy HH:mm')}">
 				Fecha de la publicación
 			</div>
+			
+			<div class="panel-body" th:if="${post.containsImage}">
+				<img th:src="${'/img/' + post.id}" +  th:alt="#{post.list.image}" />
+			</div>
+			
 		</div>
 		
 	</div>
