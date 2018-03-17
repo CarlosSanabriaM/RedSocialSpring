@@ -27,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 		.csrf().disable()
 		.authorizeRequests()
-			.antMatchers("/css/**", "/img/**", "/script/**", "/", "/signup", "/admin/login").permitAll()
+			.antMatchers("/css/**", "/img/**", "/script/**", "/", "/signup", "/admin/login","/fotossubidas/**").permitAll()
 			//TODO - Aqui en medio van las mas especificas, de arriba hacia abajo
 			.antMatchers("/user/delete/*").hasAuthority("ROLE_ADMIN")
 			.antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")

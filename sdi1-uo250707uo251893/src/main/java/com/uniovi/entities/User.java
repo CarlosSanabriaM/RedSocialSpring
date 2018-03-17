@@ -200,5 +200,17 @@ public class User {
 	}
 	
 	
+	public boolean isFriendOfOrSame(String email) {
+		if(getEmail().equals(email))
+			return true;
+		for(User friend : friends) 
+			if(friend.getEmail().equals(email))
+				return true;
+		for(User friend : auxFriends) 
+			if(friend.getEmail().equals(email))
+				return true;
+		return false;
+	}
+	
 
 }

@@ -1,5 +1,7 @@
 package com.uniovi.tests;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -9,9 +11,11 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.uniovi.tests.pageobjects.PO_AdminLoginView;
+import com.uniovi.tests.pageobjects.PO_HomeView;
 import com.uniovi.tests.pageobjects.PO_LoginView;
 import com.uniovi.tests.pageobjects.PO_PrivateView;
 import com.uniovi.tests.pageobjects.PO_Properties;
@@ -22,8 +26,8 @@ import com.uniovi.tests.pageobjects.PO_View;
 public class Tests {
 	
 	// Descomentar uno de los dos paths en función del SO:
-//	static String PathFirefox = "C:\\Path\\FirefoxPortable.exe"; 								// Windows
-	static String PathFirefox = "/Applications/Firefox_46.0.app/Contents/MacOS/firefox-bin"; 	// Mac
+	static String PathFirefox = "C:\\Users\\Alex\\Desktop\\sts-bundle\\Firefox46.win\\FirefoxPortable.exe"; 								// Windows
+	//static String PathFirefox = "/Applications/Firefox_46.0.app/Contents/MacOS/firefox-bin"; 	// Mac
 	
 	static WebDriver driver = getDriver(PathFirefox);
 	static String URL = "http://localhost:8090";
@@ -185,7 +189,14 @@ public class Tests {
 	 */
 	@Test
 	public void PR09() {
-		Assert.fail("SIN IMPLEMENTAR");
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		List<WebElement> elementos = PO_View.checkElement(driver, "free",
+				"//td[contains(text(), 'user6')]/following-sibling::*/a[contains(@href, 'user/invitate')]");
+		elementos.get(0).click();
+		PO_PrivateView.logoutAndCheckWasOk(driver);
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, "user11@gmail.com", "1234");
+		
+		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
 	
 	/**
