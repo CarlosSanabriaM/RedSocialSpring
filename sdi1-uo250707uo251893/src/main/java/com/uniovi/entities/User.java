@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+
 @Entity
 public class User {
 	@Id
@@ -24,7 +25,7 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Post> posts = new HashSet<Post>();
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = {CascadeType.PERSIST , CascadeType.REFRESH})
 	@JoinTable(name="friends",
 			joinColumns= {@JoinColumn(name="friend_id")},
 			inverseJoinColumns = {@JoinColumn(name="aux_friend_id")})
@@ -184,6 +185,18 @@ public class User {
 		} else if (!email.equals(other.email))
 			return false;
 		return true;
+	}
+
+	public void borrarAmigos() {
+		User[] amigos = new User[friends.size()];
+		friends.toArray(amigos);
+		
+		for(User amigo : amigos) {
+			this.friends.remove(amigo);
+			this.auxFriends.remove(amigo);
+			amigo.friends.remove(this);
+			amigo.auxFriends.remove(this);
+		}
 	}
 	
 	
