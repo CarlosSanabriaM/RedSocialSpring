@@ -82,15 +82,5 @@ public class Post {
 	public void setContainsImage(Boolean containsImage) {
 		this.containsImage = containsImage;
 	}
-
-//	public Image getPhoto() {
-//		return photo;
-//	}
-//
-//	public void setPhoto(Image photo) {
-//		this.photo = photo;
-//	}
-	
-	
 		
 }
