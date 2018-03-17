@@ -202,6 +202,7 @@ public class InsertSampleDataService {
 	
 	public void deleteAllAndInsertAgain() {
 		usersRepository.deleteAll();
+		invitationRepository.deleteAll();
 		init();
 	}
 	
