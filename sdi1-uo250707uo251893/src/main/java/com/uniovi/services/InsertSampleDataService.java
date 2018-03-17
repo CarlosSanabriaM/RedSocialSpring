@@ -170,7 +170,6 @@ public class InsertSampleDataService {
 		usersService.addUser(user15);
 		usersService.addUser(user16);
 		
-		
 		List<Invitation> invitaciones = new ArrayList<Invitation>() {
 			{
 				add(new Invitation(user1,user2));
@@ -197,7 +196,6 @@ public class InsertSampleDataService {
 	
 	public void deleteAllAndInsertAgain() {
 		usersRepository.deleteAll();
-		invitationRepository.deleteAll();
 		init();
 	}
 	
