@@ -153,12 +153,6 @@ public class InsertSampleDataService {
 		user5.getFriends().add(user1);
 		user5.getAuxFriends().add(user1);
 		
-		user1.getFriends().add(user6);
-		user1.getAuxFriends().add(user6);
-		user6.getFriends().add(user1);
-		user6.getAuxFriends().add(user1);
-		
-		
 		usersService.addUser(user1);
 		usersService.addUser(user2);
 		usersService.addUser(user3);
