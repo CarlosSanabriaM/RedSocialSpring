@@ -343,8 +343,14 @@ public class Tests {
 	public void PR23() {
 		PO_AdminLoginView.goToAdminLoginFillFormAndCheckWasOk(driver, adminEmail, adminPassword);
 		
-		// Eliminamos al user2 y comprobamos que ya no aparece
-		PO_PrivateView.deleteUserAndCheckWasOk(driver, "user2@gmail.com");
+		// Eliminamos al user6 y comprobamos que ya no aparece y nos deslogeamos como administradores
+		PO_PrivateView.deleteUserAndCheckWasOk(driver, "user6@gmail.com");
+		PO_PrivateView.logoutAndCheckWasOk(driver);
+		
+		// Nos conectamos como user1, que era amigo de user6, 
+		// y comprobamos que ya no aparece en su listado de amigos
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		PO_PrivateView.checkUserIsNotFriend(driver, "user6@gmail.com");
 		
 		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}

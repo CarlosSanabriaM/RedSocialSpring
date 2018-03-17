@@ -112,19 +112,15 @@ public class PO_PrivateView extends PO_NavView {
 		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userEmail, getTimeout());
 	}
 
-	//TODO - quitar
-//	public static void checkMarkDetails(WebDriver driver, String markDescription) {// TODO . modificar!!
-//		By enlace = By.xpath("//td[contains(text(), '"+ markDescription +"')]/following-sibling::*[2]");
-//		driver.findElement(enlace).click();		
-//		// Esperamos por la ventana de detalle
-//		checkElement(driver, "text", "Detalles de la nota");
-//	}
-//		
-//	public static void clickNavigationMenuOption(WebDriver driver, int page) {// TODO ELIMINAR???
-//		// Esperamos a que se muestren los enlaces de paginación
-//		List<WebElement> elementos = checkElement(driver, "free", "//a[contains(@class, 'page-link')]");
-//		// Nos vamos a la pagina indicada
-//		elementos.get(page).click();
-//	}
+	/**
+	 * Va al listado de amigos y comprueba que no aparece el email indicado
+	 * @param driver
+	 * @param userEmail
+	 */
+	public static void checkUserIsNotFriend(WebDriver driver, String userEmail) {
+		PO_PrivateView.clickDropdownMenuOptionAndCheckElement(driver, 
+				"aDropdownUsersMenu", "aUserFriendList", "text", "Tus Amigos");
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userEmail, getTimeout());
+	}
 
 }

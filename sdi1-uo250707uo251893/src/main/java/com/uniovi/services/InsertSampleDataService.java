@@ -158,6 +158,7 @@ public class InsertSampleDataService {
 		user6.getFriends().add(user1);
 		user6.getAuxFriends().add(user1);
 		
+		
 		usersService.addUser(user1);
 		usersService.addUser(user2);
 		usersService.addUser(user3);
@@ -174,7 +175,6 @@ public class InsertSampleDataService {
 		usersService.addUser(user14);
 		usersService.addUser(user15);
 		usersService.addUser(user16);
-		
 		
 		List<Invitation> invitaciones = new ArrayList<Invitation>() {
 			{
