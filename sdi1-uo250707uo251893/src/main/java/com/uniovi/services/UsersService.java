@@ -57,6 +57,8 @@ public class UsersService {
 	}
 
 	public void deleteUser(Long id) {
+		User usuarioABorrar = usersRepository.findOne(id);
+		usuarioABorrar.borrarAmigos();
 		usersRepository.delete(id);
 	}
 	

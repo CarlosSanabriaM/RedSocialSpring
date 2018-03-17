@@ -80,7 +80,7 @@ public class PostsController {
 	private void saveImage(MultipartFile image,BindingResult result,Post post) {
 		try {
 			InputStream is = image.getInputStream();
-			Files.copy(is, Paths.get("src/main/resources/static/img/" + post.getId() + ".jpg"), StandardCopyOption.REPLACE_EXISTING);
+			Files.copy(is, Paths.get("src/main/resources/static/fotosSubidas/" + post.getId() + ".jpg"), StandardCopyOption.REPLACE_EXISTING);
 		}catch(IOException e) {
 			e.printStackTrace();
 			result.addError(new ObjectError("image", "Error.post.add.image"));
