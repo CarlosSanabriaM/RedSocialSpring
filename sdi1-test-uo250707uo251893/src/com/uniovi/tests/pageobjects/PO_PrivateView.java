@@ -4,7 +4,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -130,6 +132,17 @@ public class PO_PrivateView extends PO_NavView {
 		List<WebElement> elementos = PO_View.checkElement(driver, "free",
 				"//td[contains(text(), '"+ userEmail +"')]/following-sibling::td/a[contains(@href, '/user/invitate/')]");
 		elementos.get(0).click();
+	}
+
+	/**
+	 * Comprueba que no se le puede mandar una invitación de amistad al usuario con ese email,
+	 * dado que ya son amigos.
+	 */
+	public static void checkCantSendInvitation(WebDriver driver, String userEmail) {
+		try {
+			PO_PrivateView.sendInvitation(driver, userEmail);
+			Assert.fail("Se ha encontrado el agregar usuario que precede a " + userEmail);
+		} catch (TimeoutException e) {}
 	}
 
 }

@@ -212,11 +212,7 @@ public class Tests {
 	public void PR10() {
 		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
 		
-		try {
-			PO_View.checkElement(driver, "free",
-					"//td[contains(text(), 'user2@gmail.com')]/following-sibling::td/a[contains(@href, '/user/invitate/')]");
-			Assert.fail("Se ha encontrado el agregar usuario que precede a user2");
-		}catch (TimeoutException e) {}
+		PO_PrivateView.checkCantSendInvitation(driver, "user2@gmail.com");
 		
 		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
