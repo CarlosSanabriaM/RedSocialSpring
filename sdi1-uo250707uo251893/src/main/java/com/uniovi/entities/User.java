@@ -5,7 +5,6 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-
 @Entity
 public class User {
 	@Id
@@ -200,16 +199,22 @@ public class User {
 	}
 	
 	
-	public boolean isFriendOfOrSame(String email) {
+	public boolean canInvite(String email) {
 		if(getEmail().equals(email))
-			return true;
+			return false;
 		for(User friend : friends) 
 			if(friend.getEmail().equals(email))
-				return true;
+				return false;
 		for(User friend : auxFriends) 
 			if(friend.getEmail().equals(email))
-				return true;
-		return false;
+				return false;
+		for(Invitation sended : sendedInvitations) 
+			if(sended.esDelUsuario(email))
+				return false;
+		for(Invitation receiver : receivedInvitations) 
+			if(receiver.esDelUsuario(email))
+				return false;
+		return true;
 	}
 	
 

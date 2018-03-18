@@ -24,7 +24,7 @@ public class InvitationService {
 		User receiver = usersRepository.findOne(receiver_id);
 		User sender = usersRepository.findByEmail(sender_email);
 		
-		if(receiver != null && sender != null && receiver!=sender) {
+		if(receiver != null && sender.canInvite(receiver.getEmail())) {
 			invitationRepository.save(new Invitation(sender, receiver));
 		}
 	}
@@ -37,7 +37,7 @@ public class InvitationService {
 	public void acceptInvitation(String email, Long invitation_id) {
 		Invitation invitation = invitationRepository.findOne(invitation_id);
 		
-		if(invitation.getReceiver().getEmail() == email) {
+		if(invitation != null && invitation.getReceiver().getEmail() == email) {
 			invitation.accept();
 			invitationRepository.delete(invitation);
 		}

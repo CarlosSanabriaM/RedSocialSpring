@@ -104,8 +104,8 @@ public class PostsController {
 		User user = usersService.getUser(id);
 		User userInSession = usersService.getUserByEmail(principal.getName());
 		
-		if(!user.getFriends().contains(userInSession))
-			return "redirect:/";
+		if(user == null || !user.getFriends().contains(userInSession))
+			return "redirect:/error";
 		
 		List<Post> posts = postsService.getPostsForUser(user);
 		model.addAttribute("postsList", posts);

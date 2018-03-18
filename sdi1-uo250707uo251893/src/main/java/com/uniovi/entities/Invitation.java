@@ -98,6 +98,10 @@ public class Invitation {
 			return false;
 		return true;
 	}
+
+	public boolean esDelUsuario(String email) {
+		return sender.getEmail().equals(email) || receiver.getEmail().equals(email);
+	}
 	
 	
 
