@@ -193,7 +193,7 @@ public class Tests {
 	public void PR09() {
 		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
 		List<WebElement> elementos = PO_View.checkElement(driver, "free",
-				"//td[contains(text(), 'user2@gmail.com')]/following-sibling::*/a[contains(@href, '/user/invitate/')]");
+				"//td[contains(text(), 'user2@gmail.com')]/following-sibling::td/a[contains(@href, '/user/invitate/')]");
 		elementos.get(0).click();
 		PO_PrivateView.logoutAndCheckWasOk(driver);
 		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user2Email, user2Password);
@@ -213,8 +213,8 @@ public class Tests {
 		
 		try {
 			PO_View.checkElement(driver, "free",
-					"//td[contains(text(), 'user2@gmail.com')]/following-sibling::/td/a[contains(@href, '/user/invitate/')]");
-			Assert.fail("Se ha encontrado");
+					"//td[contains(text(), 'user2@gmail.com')]/following-sibling::td/a[contains(@href, '/user/invitate/')]");
+			Assert.fail("Se ha encontrado el agregar usuario que precede a user2");
 		}catch (TimeoutException e) {}
 		
 		PO_PrivateView.logoutAndCheckWasOk(driver);
@@ -380,8 +380,8 @@ public class Tests {
 				"aDropdownPostsMenu", "aPostAdd", "text", "Nueva publicación");
 		
 		// Esperamos a que cargue y rellenamos el formulario para crear una publicación
-		String title = "Título nueva publicación";
-		String text = "Texto nueva publicación";
+		String title = "Título nueva publicación 3";
+		String text = "Texto nueva publicación 3";
 		PO_PrivateView.fillFormAddPost(driver, title, text);
 		
 		// Nos envia directamente al listado de publicaciones del usuario, 
