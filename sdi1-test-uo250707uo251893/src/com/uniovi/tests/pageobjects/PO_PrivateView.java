@@ -122,5 +122,14 @@ public class PO_PrivateView extends PO_NavView {
 				"aDropdownUsersMenu", "aUserFriendList", "text", "Tus Amigos");
 		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userEmail, getTimeout());
 	}
+	
+	/**
+	 * Manda una invitación de amistad al usuario con el email indicado
+	 */
+	public static void sendInvitation(WebDriver driver, String userEmail) {
+		List<WebElement> elementos = PO_View.checkElement(driver, "free",
+				"//td[contains(text(), '"+ userEmail +"')]/following-sibling::td/a[contains(@href, '/user/invitate/')]");
+		elementos.get(0).click();
+	}
 
 }
