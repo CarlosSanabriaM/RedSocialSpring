@@ -144,5 +144,20 @@ public class PO_PrivateView extends PO_NavView {
 			Assert.fail("Se ha encontrado el agregar usuario que precede a " + userEmail);
 		} catch (TimeoutException e) {}
 	}
+	
+	/**
+	 * Acepta una solicitud de amistad del usuario con el nombre indicado, y comprueba
+	 * que se ha añadido correctamente como amigo.
+	 */
+	public static void acceptInvitationAndCheckWasOk(WebDriver driver, String userName) {
+		// Acepta la invitación de amistad
+		List<WebElement> elementos = PO_View.checkElement(driver, "free",
+				"//td[contains(text(), '" + userName +"')]/following-sibling::*/a[contains(@href, '/user/accept/')]");
+		elementos.get(0).click();
+		
+		// Comprueba que aparece en la lista de amigos
+		PO_View.checkElement(driver, "text", "Tus Amigos");
+		PO_View.checkElement(driver, "text", userName);
+	}
 
 }

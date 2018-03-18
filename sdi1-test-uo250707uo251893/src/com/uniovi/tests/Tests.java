@@ -235,12 +235,11 @@ public class Tests {
 	@Test
 	public void PR12() {
 		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		
 		PO_PrivateView.clickDropdownMenuOptionAndCheckElement(driver, 
 				"aDropdownUsersMenu", "aUserFriendRequestList", "text", "Nombre7");
-		List<WebElement> elementos = PO_View.checkElement(driver, "free",
-				"//td[contains(text(), 'Nombre7 Apellido7')]/following-sibling::*/a[contains(@href, '/user/accept/')]");
-		elementos.get(0).click();
-		PO_View.checkElement(driver, "text", "Nombre7 Apellido7");
+		PO_PrivateView.acceptInvitationAndCheckWasOk(driver, "Nombre7 Apellido7");
+		
 		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
 	
@@ -313,7 +312,7 @@ public class Tests {
 				"//a[contains(text(), 'Marta Almonte')]");
 		elementos.get(0).click();
 		
-		// Comprobamos tambien que el usuario user2 tiene 4 publicaciones
+		// Comprobamos que Marta tiene 4 publicaciones
 		PO_PrivateView.checkNumPosts(driver, 4);
 		
 		PO_PrivateView.logoutAndCheckWasOk(driver);

@@ -94,6 +94,7 @@ public class PostsController {
 		
 		List<Post> posts = postsService.getPostsForUser(userInSession);
 		model.addAttribute("postsList", posts);
+		model.addAttribute("isFriend", false);
 		loggerService.userListHisPosts(emailUserInSession, posts);
 		
 		return "post/list";
@@ -109,6 +110,8 @@ public class PostsController {
 		
 		List<Post> posts = postsService.getPostsForUser(user);
 		model.addAttribute("postsList", posts);
+		model.addAttribute("friendName", user.getFullName());
+		model.addAttribute("isFriend", true);
 		loggerService.userListHisPosts(user.getEmail(), posts);
 		
 		return "post/list";

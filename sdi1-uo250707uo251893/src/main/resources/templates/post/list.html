@@ -9,7 +9,8 @@
 	
 	<div class="container">
 	
-		<h2 th:text="#{Title.post.list}">Mis publicaciones</h2>
+		<h2 th:if="${!isFriend}" th:text="#{Title.post.list}">Mis publicaciones</h2>
+		<h2 th:if="${isFriend}" th:text="#{Title.post.friend.list} + ' ' + ${friendName}">Mis publicaciones</h2>
 
 		<div class="panel panel-default" th:each="post : ${postsList}">
 		
