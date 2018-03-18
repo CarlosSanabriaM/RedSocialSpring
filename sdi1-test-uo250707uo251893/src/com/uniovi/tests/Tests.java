@@ -1,19 +1,14 @@
 package com.uniovi.tests;
 
-import java.util.List;
-
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.uniovi.tests.pageobjects.PO_AdminLoginView;
@@ -22,7 +17,6 @@ import com.uniovi.tests.pageobjects.PO_PrivateView;
 import com.uniovi.tests.pageobjects.PO_Properties;
 import com.uniovi.tests.pageobjects.PO_SignupView;
 import com.uniovi.tests.pageobjects.PO_View;
-import com.uniovi.tests.util.SeleniumUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class Tests {
@@ -305,14 +299,11 @@ public class Tests {
 	public void PR16() {
 		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
 		
-		PO_PrivateView.clickDropdownMenuOptionAndCheckElement(driver, 
-				"aDropdownUsersMenu", "aUserFriendList", "text", "Tus Amigos");
+		// Comprobamos que se accede correctamente al listado de publicaciones Marta,
+		// que es amiga de user1
+		PO_PrivateView.listFriendPostsAndCheckWasOk(driver, "Marta Almonte");
 		
-		List<WebElement> elementos = PO_View.checkElement(driver, "free",
-				"//a[contains(text(), 'Marta Almonte')]");
-		elementos.get(0).click();
-		
-		// Comprobamos que Marta tiene 4 publicaciones
+		// Comprobamos también que Marta tiene 4 publicaciones
 		PO_PrivateView.checkNumPosts(driver, 4);
 		
 		PO_PrivateView.logoutAndCheckWasOk(driver);
@@ -327,8 +318,8 @@ public class Tests {
 		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
 		
 		driver.navigate().to("http://localhost:8090/post/list/4");
-		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "Mis Publicaciones", 2);
-		PO_PrivateView.checkElement(driver, "text", "error");
+		PO_View.checkElement(driver, "text", "¡Se ha producido un error!");
+		PO_PrivateView.clickLinkAndCheckElement(driver, "aIndex", "text", "¡Bienvenidos a Red Social!");
 		
 		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}	
@@ -345,18 +336,15 @@ public class Tests {
 		PO_PrivateView.clickDropdownMenuOptionAndCheckElement(driver, 
 				"aDropdownPostsMenu", "aPostAdd", "text", "Nueva publicación");
 		
-		// Esperamos a que cargue y rellenamos el formulario para crear una publicación
-		String title = "Título nueva publicación";
-		String text = "Texto nueva publicación";
+		// Esperamos a que cargue y rellenamos el formulario para crear una publicación con una foto adjunta
+		String title = "Título nueva publicación 2";
+		String text = "Texto nueva publicación 2";
 
-		String pathProyecto = System.getProperty("user.dir");		
-		String pathFotoPrueba = "file:///"+pathProyecto+"/imagen.jpg";
-		
-		driver.findElement(By.name("image")).sendKeys(pathFotoPrueba);
-		PO_PrivateView.fillFormAddPost(driver, title, text);
+		PO_PrivateView.fillFormAddPostWithImage(driver, title, text);
 		
 		// Nos envia directamente al listado de publicaciones del usuario, 
 		// así que buscamos el titulo de la nueva publicación que hemos creado
+		// y comprobamos que tiene una imágen
 		PO_PrivateView.checkElement(driver, "text", title);
 		PO_PrivateView.checkElement(driver, "free", "//img[contains(@alt, 'Imagen')]");
 		

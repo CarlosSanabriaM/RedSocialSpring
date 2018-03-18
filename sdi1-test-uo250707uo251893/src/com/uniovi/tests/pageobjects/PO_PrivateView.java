@@ -49,6 +49,24 @@ public class PO_PrivateView extends PO_NavView {
 	}
 	
 	/**
+	 * Rellena el formulario de crear una publicación con los datos indicados,
+	 * incluyendo además una imágen de prueba
+	 * 
+	 * @param driver: apuntando al navegador abierto actualmente. 
+	 * @param titlep: valor a introducir en el campo title.
+	 * @param textp: valor a introducir en el campo text.
+	 */
+	public static void fillFormAddPostWithImage(WebDriver driver, String titlep, String textp) {
+		String pathProyecto = System.getProperty("user.dir");		
+		String pathFotoPrueba = "file:///"+pathProyecto+"/imagen.jpg";
+		
+		// Esperamos a que cargue el formulario, y rellenamos los datos añadiendo también una imagen
+		checkElement(driver, "id", "buttonSubmit");
+		driver.findElement(By.name("image")).sendKeys(pathFotoPrueba);
+		PO_PrivateView.fillFormAddPost(driver, titlep, textp);
+	}
+	
+	/**
 	 * Comprueba que el numero de usuarios en la vista actual coincida con el indicado
 	 */
 	public static void checkNumUsers(WebDriver driver, int numUsers) {
@@ -158,6 +176,23 @@ public class PO_PrivateView extends PO_NavView {
 		// Comprueba que aparece en la lista de amigos
 		PO_View.checkElement(driver, "text", "Tus Amigos");
 		PO_View.checkElement(driver, "text", userName);
+	}
+
+	/**
+	 * Accede al listado de amigos, clicka en el amigo con ese nombre, y comprueba
+	 * que se pueden ver sus posts correctamente.
+	 */
+	public static void listFriendPostsAndCheckWasOk(WebDriver driver, String friendName) {
+		// Va al listado de amigos
+		PO_PrivateView.clickDropdownMenuOptionAndCheckElement(driver, 
+				"aDropdownUsersMenu", "aUserFriendList", "text", "Tus Amigos");
+		
+		//Clicka en el nombre del amigo
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//a[contains(text(), '"+ friendName +"')]");
+		elementos.get(0).click();
+		
+		// Comprueba que aparece en el listado de posts de su amigo
+		PO_View.checkElement(driver, "text", "Publicaciones de " + friendName);
 	}
 
 }
