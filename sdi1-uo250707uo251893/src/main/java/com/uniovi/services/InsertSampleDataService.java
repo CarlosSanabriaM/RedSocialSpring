@@ -141,17 +141,8 @@ public class InsertSampleDataService {
 				add(new Post("Titulo D4", "Texto D4", new Date(1507133200656L), user4));
 			}
 		};
-		user4.setPosts(user4Posts);		
+		user4.setPosts(user4Posts);			
 		
-		user1.getFriends().add(user4);
-		user1.getAuxFriends().add(user4);
-		user4.getFriends().add(user1);
-		user4.getAuxFriends().add(user1);
-		
-		user1.getFriends().add(user5);
-		user1.getAuxFriends().add(user5);
-		user5.getFriends().add(user1);
-		user5.getAuxFriends().add(user1);
 		
 		usersService.addUser(user1);
 		usersService.addUser(user2);
@@ -170,9 +161,29 @@ public class InsertSampleDataService {
 		usersService.addUser(user15);
 		usersService.addUser(user16);
 		
+		user1.getFriends().add(user4);
+		user1.getAuxFriends().add(user4);
+		user4.getFriends().add(user1);
+		user4.getAuxFriends().add(user1);
+		
+		user1.getFriends().add(user5);
+		user1.getAuxFriends().add(user5);
+		user5.getFriends().add(user1);
+		user5.getAuxFriends().add(user1);
+		
+		user2.getFriends().add(user6);
+		user2.getAuxFriends().add(user6);
+		user6.getFriends().add(user2);
+		user6.getAuxFriends().add(user2);
+		
+		usersRepository.save(user1);
+		usersRepository.save(user2);
+		usersRepository.save(user4);
+		usersRepository.save(user5);
+		usersRepository.save(user6);
+		
 		List<Invitation> invitaciones = new ArrayList<Invitation>() {
 			{
-				add(new Invitation(user1,user2));
 				add(new Invitation(user1,user3));
 				add(new Invitation(user7,user1));
 				add(new Invitation(user8,user1));
@@ -195,6 +206,7 @@ public class InsertSampleDataService {
 	}
 	
 	public void deleteAllAndInsertAgain() {
+		invitationRepository.deleteAll();
 		usersRepository.deleteAll();
 		init();
 	}

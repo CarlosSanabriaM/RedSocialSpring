@@ -10,17 +10,19 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.uniovi.tests.pageobjects.PO_AdminLoginView;
-import com.uniovi.tests.pageobjects.PO_HomeView;
 import com.uniovi.tests.pageobjects.PO_LoginView;
 import com.uniovi.tests.pageobjects.PO_PrivateView;
 import com.uniovi.tests.pageobjects.PO_Properties;
 import com.uniovi.tests.pageobjects.PO_SignupView;
 import com.uniovi.tests.pageobjects.PO_View;
+import com.uniovi.tests.util.SeleniumUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class Tests {
@@ -191,11 +193,12 @@ public class Tests {
 	public void PR09() {
 		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
 		List<WebElement> elementos = PO_View.checkElement(driver, "free",
-				"//td[contains(text(), 'user6')]/following-sibling::*/a[contains(@href, 'user/invitate')]");
+				"//td[contains(text(), 'user2@gmail.com')]/following-sibling::td/a[contains(@href, '/user/invitate/')]");
 		elementos.get(0).click();
 		PO_PrivateView.logoutAndCheckWasOk(driver);
-		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, "user11@gmail.com", "1234");
-		
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user2Email, user2Password);
+		PO_PrivateView.clickDropdownMenuOptionAndCheckElement(driver, 
+				"aDropdownUsersMenu", "aUserFriendRequestList", "text", "Pedro");
 		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
 	
@@ -206,7 +209,15 @@ public class Tests {
 	 */
 	@Test
 	public void PR10() {
-		Assert.fail("SIN IMPLEMENTAR");
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		
+		try {
+			PO_View.checkElement(driver, "free",
+					"//td[contains(text(), 'user2@gmail.com')]/following-sibling::td/a[contains(@href, '/user/invitate/')]");
+			Assert.fail("Se ha encontrado el agregar usuario que precede a user2");
+		}catch (TimeoutException e) {}
+		
+		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
 	
 	/**
@@ -215,7 +226,10 @@ public class Tests {
 	 */
 	@Test
 	public void PR11() {
-		Assert.fail("SIN IMPLEMENTAR");
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		PO_PrivateView.clickDropdownMenuOptionAndCheckElement(driver, 
+				"aDropdownUsersMenu", "aUserFriendRequestList", "text", "Nombre7");
+		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
 	
 	/**
@@ -223,7 +237,14 @@ public class Tests {
 	 */
 	@Test
 	public void PR12() {
-		Assert.fail("SIN IMPLEMENTAR");
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		PO_PrivateView.clickDropdownMenuOptionAndCheckElement(driver, 
+				"aDropdownUsersMenu", "aUserFriendRequestList", "text", "Nombre7");
+		List<WebElement> elementos = PO_View.checkElement(driver, "free",
+				"//td[contains(text(), 'Nombre7 Apellido7')]/following-sibling::*/a[contains(@href, '/user/accept/')]");
+		elementos.get(0).click();
+		PO_View.checkElement(driver, "text", "Nombre7 Apellido7");
+		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
 	
 	/**
@@ -231,8 +252,13 @@ public class Tests {
 	 * comprobación con una lista que al menos tenga un amigo.
 	 */
 	@Test
-	public void PR13() {
-		Assert.fail("SIN IMPLEMENTAR");
+	public void PRv13() {
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		
+		PO_PrivateView.clickDropdownMenuOptionAndCheckElement(driver, 
+				"aDropdownUsersMenu", "aUserFriendList", "text", "Marta");
+		
+		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
 	
 	/**
@@ -283,7 +309,15 @@ public class Tests {
 	public void PR16() {
 		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
 		
-		Assert.fail("SIN IMPLEMENTAR");
+		PO_PrivateView.clickDropdownMenuOptionAndCheckElement(driver, 
+				"aDropdownUsersMenu", "aUserFriendList", "text", "Tus Amigos");
+		
+		List<WebElement> elementos = PO_View.checkElement(driver, "free",
+				"//a[contains(text(), 'Marta Almonte')]");
+		elementos.get(0).click();
+		
+		// Comprobamos tambien que el usuario user2 tiene 4 publicaciones
+		PO_PrivateView.checkNumPosts(driver, 4);
 		
 		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
@@ -294,7 +328,13 @@ public class Tests {
 	 */
 	@Test
 	public void PR17() {
-		Assert.fail("SIN IMPLEMENTAR");
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		
+		driver.navigate().to("http://localhost:8090/post/list/4");
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "Mis Publicaciones", 2);
+		PO_PrivateView.checkElement(driver, "text", "error");
+		
+		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}	
 	
 	/**
@@ -302,7 +342,29 @@ public class Tests {
 	 */
 	@Test
 	public void PR18() {
-		Assert.fail("SIN IMPLEMENTAR");
+		// Iniciamos sesión, pinchamos en "Publicaciones" -> "Nueva Publicación" en el menú de navegación
+		// y comprobamos que aparece el texto "Nueva publicación"
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		
+		PO_PrivateView.clickDropdownMenuOptionAndCheckElement(driver, 
+				"aDropdownPostsMenu", "aPostAdd", "text", "Nueva publicación");
+		
+		// Esperamos a que cargue y rellenamos el formulario para crear una publicación
+		String title = "Título nueva publicación";
+		String text = "Texto nueva publicación";
+
+		String pathProyecto = System.getProperty("user.dir");		
+		String pathFotoPrueba = "file:///"+pathProyecto+"/imagen.jpg";
+		
+		driver.findElement(By.name("image")).sendKeys(pathFotoPrueba);
+		PO_PrivateView.fillFormAddPost(driver, title, text);
+		
+		// Nos envia directamente al listado de publicaciones del usuario, 
+		// así que buscamos el titulo de la nueva publicación que hemos creado
+		PO_PrivateView.checkElement(driver, "text", title);
+		PO_PrivateView.checkElement(driver, "free", "//img[contains(@alt, 'Imagen')]");
+		
+		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
 	
 	/**
@@ -310,7 +372,23 @@ public class Tests {
 	 */
 	@Test
 	public void PR19() {
-		Assert.fail("SIN IMPLEMENTAR");
+		// Iniciamos sesión, pinchamos en "Publicaciones" -> "Nueva Publicación" en el menú de navegación
+		// y comprobamos que aparece el texto "Nueva publicación"
+		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
+		
+		PO_PrivateView.clickDropdownMenuOptionAndCheckElement(driver, 
+				"aDropdownPostsMenu", "aPostAdd", "text", "Nueva publicación");
+		
+		// Esperamos a que cargue y rellenamos el formulario para crear una publicación
+		String title = "Título nueva publicación 3";
+		String text = "Texto nueva publicación 3";
+		PO_PrivateView.fillFormAddPost(driver, title, text);
+		
+		// Nos envia directamente al listado de publicaciones del usuario, 
+		// así que buscamos el titulo de la nueva publicación que hemos creado
+		PO_PrivateView.checkElement(driver, "text", title);
+		
+		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
 	
 	/**
@@ -355,13 +433,13 @@ public class Tests {
 		PO_AdminLoginView.goToAdminLoginFillFormAndCheckWasOk(driver, adminEmail, adminPassword);
 		
 		// Eliminamos al user6 y comprobamos que ya no aparece y nos deslogeamos como administradores
-		PO_PrivateView.deleteUserAndCheckWasOk(driver, "user6@gmail.com");
+		PO_PrivateView.deleteUserAndCheckWasOk(driver, "user5@gmail.com");
 		PO_PrivateView.logoutAndCheckWasOk(driver);
 		
 		// Nos conectamos como user1, que era amigo de user6, 
 		// y comprobamos que ya no aparece en su listado de amigos
 		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
-		PO_PrivateView.checkUserIsNotFriend(driver, "user6@gmail.com");
+		PO_PrivateView.checkUserIsNotFriend(driver, "user5@gmail.com");
 		
 		PO_PrivateView.logoutAndCheckWasOk(driver);
 	}
