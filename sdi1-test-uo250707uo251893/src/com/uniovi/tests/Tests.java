@@ -241,7 +241,7 @@ public class Tests {
 	 * comprobación con una lista que al menos tenga un amigo.
 	 */
 	@Test
-	public void PRv13() {
+	public void PR13() {
 		PO_LoginView.goToLoginFillFormAndCheckWasOk(driver, user1Email, user1Password);
 		
 		PO_PrivateView.clickDropdownMenuOptionAndCheckElement(driver, 

@@ -31,6 +31,21 @@
 			Todos los usuarios:
 		</p>
 		
+		<script th:inline="javascript">
+			function updateTableUsersAndPagination(){
+				var numberPage = [[${param.page}]];
+				var sizePage = [[${param.size}]];
+			  	var urlUpdate = '/user/list/update';
+			  	if ( numberPage != null ){
+			  		urlUpdate += "?page=" + numberPage[0];
+			  	}
+			  	if ( sizePage != null ){
+			  		urlUpdate += "&size=" + sizePage[0];
+			  	}
+			  	$("#tableUsersAndPagination").load(urlUpdate);
+			}
+		</script>
+		
 		<div th:fragment="tableUsersAndPagination" id="tableUsersAndPagination">
 		
 			<div class="table-responsive">
@@ -48,8 +63,21 @@
 							<td th:text="${user.name + ' ' + user.lastName}">Nombre completo del usuario</td>
 							<td th:text="${user.email}">Email del usuario</td>
 							<td sec:authorize="hasRole('ROLE_PUBLIC')"> 
-								<a th:if="${user.canInvite(#authorization.getAuthentication().getName())}" 
-									th:href="'/user/invitate/' + ${user.id}" th:text="#{User.sendInvitation}">Invitacion</a> 
+							
+								<div th:if="${user.canInvite(#authorization.getAuthentication().getName())}">
+									<button type="button" th:id="${'invitateUserButton' + user.id}"
+										class="btn btn-default" th:text="#{User.sendInvitation}">Invitacion</button>
+									<script th:inline="javascript">
+										/*<![CDATA[*/
+										$("#invitateUserButton[[${user.id}]]").click( function() {
+											$.get("/user/invitate/[[${user.id}]]", function(data) {
+												updateTableUsersAndPagination();
+											});
+										});
+										/*]]>*/
+									</script>
+								</div>
+								
 							</td>
 							 
 							<td sec:authorize="hasRole('ROLE_ADMIN')">
@@ -60,16 +88,7 @@
 										/*<![CDATA[*/
 										$("#deleteUserButton[[${user.id}]]").click( function() {
 											$.get("/user/delete/[[${user.id}]]", function(data) {
-												var numberPage = [[${param.page}]];
-												var sizePage = [[${param.size}]];
-											  	var urlUpdate = '/user/list/update';
-											  	if ( numberPage != null ){
-											  		urlUpdate += "?page=" + numberPage[0];
-											  	}
-											  	if ( sizePage != null ){
-											  		urlUpdate += "&size=" + sizePage[0];
-											  	}
-											  	$("#tableUsersAndPagination").load(urlUpdate);
+												updateTableUsersAndPagination();
 											});
 										});
 										/*]]>*/

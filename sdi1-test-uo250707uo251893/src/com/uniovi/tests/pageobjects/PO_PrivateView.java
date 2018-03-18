@@ -117,7 +117,7 @@ public class PO_PrivateView extends PO_NavView {
 		// Buscamos una celda que contenga el email indicado. 
 		// La celda siguiente de la misma fila contendrá el botón de eliminar, así que lo clickamos.
 		List<WebElement> elementos = checkElement(driver, "free",
-				"//td[contains(text(), '"+ userEmail +"')]/following-sibling::td/div/button");
+				"//td[contains(text(), '"+ userEmail +"')]/following-sibling::td/div/button[contains(@id, 'deleteUserButton')]");
 		elementos.get(0).click();
 	}
 	
@@ -147,8 +147,10 @@ public class PO_PrivateView extends PO_NavView {
 	 * Manda una invitación de amistad al usuario con el email indicado
 	 */
 	public static void sendInvitation(WebDriver driver, String userEmail) {
-		List<WebElement> elementos = PO_View.checkElement(driver, "free",
-				"//td[contains(text(), '"+ userEmail +"')]/following-sibling::td/a[contains(@href, '/user/invitate/')]");
+		// Buscamos una celda que contenga el email indicado. 
+		// La celda siguiente de la misma fila contendrá el botón de invitar, así que lo clickamos.
+		List<WebElement> elementos = checkElement(driver, "free",
+				"//td[contains(text(), '"+ userEmail +"')]/following-sibling::td/div/button[contains(@id, 'invitateUserButton')]");
 		elementos.get(0).click();
 	}
 
