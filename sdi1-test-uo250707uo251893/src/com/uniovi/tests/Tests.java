@@ -1,6 +1,5 @@
 package com.uniovi.tests;
 
-import java.nio.file.Paths;
 import java.util.List;
 
 import org.junit.After;
@@ -18,9 +17,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.uniovi.tests.pageobjects.PO_AdminLoginView;
-import com.uniovi.tests.pageobjects.PO_HomeView;
 import com.uniovi.tests.pageobjects.PO_LoginView;
-import com.uniovi.tests.pageobjects.PO_NavView;
 import com.uniovi.tests.pageobjects.PO_PrivateView;
 import com.uniovi.tests.pageobjects.PO_Properties;
 import com.uniovi.tests.pageobjects.PO_SignupView;
@@ -355,7 +352,11 @@ public class Tests {
 		// Esperamos a que cargue y rellenamos el formulario para crear una publicación
 		String title = "Título nueva publicación";
 		String text = "Texto nueva publicación";
-		driver.findElement(By.name("image")).sendKeys("C:\\Users\\Alex\\Desktop\\Red Social\\sdi1-uo250707uo251893\\sdi1-uo250707uo251893\\imagen.jpg");
+
+		String pathProyecto = System.getProperty("user.dir");		
+		String pathFotoPrueba = "file:///"+pathProyecto+"/imagen.jpg";
+		
+		driver.findElement(By.name("image")).sendKeys(pathFotoPrueba);
 		PO_PrivateView.fillFormAddPost(driver, title, text);
 		
 		// Nos envia directamente al listado de publicaciones del usuario, 
