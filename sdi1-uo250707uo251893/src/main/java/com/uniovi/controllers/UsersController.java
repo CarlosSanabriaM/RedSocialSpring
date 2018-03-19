@@ -109,14 +109,6 @@ public class UsersController {
 			return "redirect:/admin/login?error=role";
 		} 
 		
-		if(urlLogin!= null && urlLogin.equals("/login") && !role.equals("ROLE_PUBLIC")) {
-			securityService.logoutUserInSession();
-			
-			loggerService.errorByRoleInLogin(email);
-			
-			return "redirect:/login?error";
-		}
-		
 		// Si accede desde un login, es que acaba de iniciar sesión
 		if(urlLogin!= null) {
 			loggerService.userHasLoggedInFrom(email, urlLogin);

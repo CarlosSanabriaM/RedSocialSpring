@@ -28,12 +28,6 @@ public class LoggerService {
 		log.info("El usuario con email '{}' ha iniciado sesión de forma automática después de registrarse", email);
 	}
 	
-	public void errorByRoleInLogin(String email) {
-		log.info("Intento de inicio de sesión fallido en el formulario de login, "
-				+ "debido a que el rol del usuario que ha intentado entrar no es ROLE_PUBLIC. "
-				+ "El email del usuario que ha intentado entrar desde /login es: {}", email);
-	}
-	
 	public void errorByCredentialsInAdminLogin() {
 		log.info("Intento de inicio de sesión fallido en el formulario de login del administrador "
 				+ "(/admin/login), debido a credenciales erróneas.");
