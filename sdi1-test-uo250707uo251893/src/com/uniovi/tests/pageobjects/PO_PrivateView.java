@@ -172,7 +172,7 @@ public class PO_PrivateView extends PO_NavView {
 	public static void acceptInvitationAndCheckWasOk(WebDriver driver, String userName) {
 		// Acepta la invitación de amistad
 		List<WebElement> elementos = PO_View.checkElement(driver, "free",
-				"//td[contains(text(), '" + userName +"')]/following-sibling::*/a[contains(@href, '/user/accept/')]");
+				"//td[contains(text(), '" + userName +"')]/following-sibling::td/div/button[contains(@id,'acceptInvitationButton')]");
 		elementos.get(0).click();
 		
 		// Comprueba que aparece en la lista de amigos

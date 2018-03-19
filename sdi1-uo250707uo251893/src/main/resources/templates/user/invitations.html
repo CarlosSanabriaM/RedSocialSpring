@@ -24,8 +24,21 @@
 					<tbody>
 						<tr th:each="invitation : ${invitationsList}">
 							<td th:text="${invitation.sender.name + ' ' + invitation.sender.lastName}">Nombre completo del usuario</td>
-							<td> <a th:href="'/user/accept/' + ${invitation.id}" th:text="#{User.acceptInvitation}">Aceptar</a> </td>
-	
+							
+							<td> 								
+								<div>
+									<button type="button" th:id="${'acceptInvitationButton' + invitation.id}"
+										class="btn btn-default" th:text="#{User.acceptInvitation}">Aceptar</button>
+									<script th:inline="javascript">
+										/*<![CDATA[*/
+										$("#acceptInvitationButton[[${invitation.id}]]").click( function() {
+											window.location.href = "/user/accept/[[${invitation.id}]]";
+										});
+										/*]]>*/
+									</script>
+								</div>
+							</td>
+							
 						</tr>
 					</tbody>
 				</table>
