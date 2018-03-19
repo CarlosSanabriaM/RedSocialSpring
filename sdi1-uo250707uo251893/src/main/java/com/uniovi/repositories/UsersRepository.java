@@ -28,5 +28,8 @@ public interface UsersRepository extends CrudRepository<User, Long> {
 
 	@Query("SELECT u FROM User u JOIN u.friends f WHERE f.email = ?1")
 	Page<User> getFriendsOf(Pageable pageable, String email);
+
+	@Query("SELECT u FROM User u JOIN u.friends f WHERE f.email = ?1")
+	List<User> getFriendsOf(String email);
 	
 }

@@ -2,7 +2,7 @@ package com.uniovi.tests.pageobjects;
 
 import org.openqa.selenium.WebDriver;
 
-public class PO_HomeView extends PO_NavView { //TODO - quitar??
+public class PO_HomeView extends PO_NavView {
 
 	/**
 	 * Comprueba que se carga el saludo de bienvenida en el idioma indicado
