@@ -3,8 +3,8 @@ Este proyecto se trata de una aplicación web realizada para la asignatura "Sist
 
 
 ## Autores
-* Carlos Sanabria Miranda (@CarlosSanabriaM)
-* Alejandro Barrera Sánchez (@wason12)
+* Carlos Sanabria Miranda ([@CarlosSanabriaM](https://github.com/CarlosSanabriaM))
+* Alejandro Barrera Sánchez ([@wason12](https://github.com/wason12))
 
 
 ## Contenido
