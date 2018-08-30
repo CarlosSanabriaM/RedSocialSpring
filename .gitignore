@@ -27,3 +27,9 @@ hs_err_pid*
 .settings/
 .project
 .classpath
+
+# Maven
+target/
+
+# Bin folder (in tests project)
+/red-social-spring-test/bin
