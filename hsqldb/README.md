@@ -3,7 +3,7 @@
 
 To start de database, place yourself into the bin folder, and execute the runServer file (.bat file for Windows and .sh file for Mac or similar). In Mac you will have to place yourself in that folder in the command line and execute it like this: "./runServer.sh", without the double quotes. In Windows you'll only need to double click the file in the Folder Explorer.
 
-It will create some files in the bin folder to store the data.
+It will create some files in the data folder, that represents the database info.
 
 --------------------------------------------------------------
 ## Complete files and folders explanation:
