@@ -20,9 +20,9 @@ import com.uniovi.tests.pageobjects.PO_View;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class Tests {
 	
-	// Descomentar uno de los dos paths en función del SO:
-	//static String PathFirefox = "C:\\Users\\Alex\\Desktop\\sts-bundle\\Firefox46.win\\FirefoxPortable.exe";  // Windows
-	static String PathFirefox = "/Applications/Firefox_46.0.app/Contents/MacOS/firefox-bin"; 			   // Mac
+	// Indicar la ruta donde está situado el firefox (ha de ser una version inferior a la 48)
+	// La ruta en Mac es muy distinta a la de Windows
+	static String PathFirefox = "/Applications/Firefox_46.0.app/Contents/MacOS/firefox-bin";
 	
 	static WebDriver driver = getDriver(PathFirefox);
 	static String URL = "http://localhost:8090";
