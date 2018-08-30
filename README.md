@@ -21,3 +21,23 @@ Esta aplicación utiliza una base de datos HSQLDB, que genera una serie de fiche
 Resumiendo cómo arrancar la BD: Ejecutar el script runServer (en el caso de Windows es el que tiene extensión .bat y en el caso de Mac el que tiene extensión .sh).
 
 Al ejecutar la aplicación, la base de datos será rellenada con datos de prueba. Cada vez que se ejecutan los tests, la base de datos es vaciada y rellenada con dichos datos de prueba.
+
+
+## Cómo ejecutar la aplicación
+Primero es necesario tener arrancada la base de datos, como se explica en el apartado anterior.
+
+Hay varias formas para ejecutar, entre ellas:
+1. **Desde línea de comandos:** Situarse en la carpeta *red-social-spring* desde la línea de comandos y ejecutar el comando: `mvn spring-boot:run`. Para parar la ejecución, pulsar `Control + C`.
+2. **Utilizando el IDE Eclipse:** Importar el proyecto *red-social-spring* en un workspace. Hacer click derecho en el archivo *RedSocialSpringApplication.java* y seleccionar *Run as -> Java Application*.
+
+Para visualizar la web, abrir un navegador y visitar la siguiente URL: http://localhost:8090/.
+
+
+## Cómo ejecutar los tests
+Para probar la aplicación se utiliza una versión antigua de un navegador Firefox. En concreto, la versión 46. Este Firefox en particular no guarda datos en caché, por lo que es perfecto para probar la aplicación mientras está en desarrollo.
+
+Es necesaria una versión de Firefox 47 o inferior, debido a que a partir de la 48 Mozilla no permite utilizar Selenium.
+
+Una vez tenemos dicho Firefox, hay que acceder al fichero `Tests.java` del proyecto *red-social-spring-test* y modificar la ruta donde se encuentra dicha versión de Firefox. Para ello, hay que cambiar la línea `static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox-bin";` e indicar ahí la ruta.
+
+Importar el proyecto en un workspace de Eclipse. Hacer click derecho en el archivo *Tests.java* y seleccionar *Run as -> JUnit Test*.
